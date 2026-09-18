@@ -1,0 +1,360 @@
+<div class="loader" [class.done]="loaded">
+  <div class="loader-top"><span>LIMITLESS</span><span>EST. 2000s</span></div>
+  <div class="loader-word">
+    THE FUTURE IS <b>LIMITLESS<span>.</span></b>
+  </div>
+  <div class="loader-line"><i></i></div>
+  <small>MARKETING / PEOPLE / MOTION</small>
+</div>
+<div class="cursor" [class.visible]="cursorVisible">
+  <span></span><b>VIEW</b>
+</div>
+<div class="progress"><i [style.width.%]="scrollProgress"></i></div>
+<header class="nav" [class.scrolled]="scrollProgress > 3">
+  <button type="button" class="brand" (click)="scrollTo('home')">
+    <span class="brand-icon"><i></i><i></i><i></i><i></i></span
+    ><span><b>Limitless</b><small>Marketing Services</small></span>
+  </button>
+  <nav [class.open]="menuOpen">
+    <button
+      type="button"
+      [class.active]="activeSection === 'about'"
+      (click)="scrollTo('about')"
+    >
+      About</button
+    ><button
+      type="button"
+      [class.active]="activeSection === 'services'"
+      (click)="scrollTo('services')"
+    >
+      Services</button
+    ><button
+      type="button"
+      [class.active]="activeSection === 'work'"
+      (click)="scrollTo('work')"
+    >
+      Work</button
+    ><button
+      type="button"
+      [class.active]="activeSection === 'contact'"
+      (click)="scrollTo('contact')"
+    >
+      Contact</button
+    ><button type="button" class="nav-cta" (click)="scrollTo('contact')">
+      Start a project <span>↗</span>
+    </button>
+  </nav>
+  <button
+    type="button"
+    class="menu"
+    [class.open]="menuOpen"
+    (click)="(toggleMenu)"
+  >
+    <i></i><i></i>
+  </button>
+</header>
+<main>
+  <section id="home" class="hero">
+    <canvas id="webgl-canvas" aria-hidden="true"></canvas>
+    <div class="hero-grid"></div>
+    <div class="hero-orb orb-a"></div>
+    <div class="hero-orb orb-b"></div>
+    <div class="hero-top">
+      <span>CAIRO / EGYPT</span><span>PEOPLE-TO-PEOPLE AGENCY</span
+      ><span>01—06</span>
+    </div>
+    <div class="hero-content">
+      <p class="hero-kicker"><b></b>20+ YEARS OF HUMAN-CENTRIC MARKETING</p>
+      <h1 class="hero-title">
+        <span class="line">The future is</span
+        ><span class="line"><em>limitless.</em><sup>®</sup></span>
+      </h1>
+      <div class="hero-bottom">
+        <p>
+          We build real connections, turn consumers into loyal customers, and
+          make brands move in the real world.
+        </p>
+        <button type="button" class="circle-cta" (click)="scrollTo('work')">
+          <span>Explore<br />our work</span><b>↘</b>
+        </button>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <span>MARKETING</span><span>PEOPLE</span><span>MOTION</span
+      ><span>RESULTS</span>
+    </div>
+    <div class="hero-stamp">
+      <strong>20+</strong><span>YEARS OF<br />EXPERIENCE</span>
+    </div>
+    <div class="hero-scroll">SCROLL TO EXPLORE <i></i></div>
+  </section>
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>FIELD MARKETING</span><b>✦</b><span>BRAND ACTIVATION</span><b>✦</b
+      ><span>ROADSHOWS</span><b>✦</b><span>PRODUCTION</span><b>✦</b
+      ><span>DIGITAL</span><b>✦</b><span>FIELD MARKETING</span><b>✦</b
+      ><span>BRAND ACTIVATION</span><b>✦</b><span>ROADSHOWS</span><b>✦</b
+      ><span>PRODUCTION</span><b>✦</b>
+    </div>
+  </div>
+  <section id="about" class="section about">
+    <div class="section-no reveal">01 / ABOUT US <span>WHO WE ARE</span></div>
+    <div class="about-grid">
+      <div class="reveal">
+        <p class="kicker">Not just marketing.</p>
+        <h2>We put <em>people</em><br />at the center.</h2>
+      </div>
+      <div class="about-copy reveal">
+        <p class="big">
+          Our company was created with the vision of being the best in
+          marketing.
+        </p>
+        <p>
+          We are a people-to-people marketing agency. We build real connections
+          and turn consumers into loyal customers. Our goal isn’t just to reach
+          people — it’s to touch their lives and make a difference.
+        </p>
+        <div class="scribble">Human connection <span>↗</span></div>
+      </div>
+    </div>
+    <div class="about-image reveal">
+      <img
+        src="assets/projects/project-06.jpg"
+        alt="Limitless marketing work"
+      />
+      <div class="image-caption">
+        <span>LIMITLESS / 01</span><span>PEOPLE → BRANDS</span>
+      </div>
+    </div>
+  </section>
+  <section class="statement">
+    <div class="statement-word">PEOPLE</div>
+    <div class="statement-content reveal">
+      <small>THE LIMITLESS APPROACH</small>
+      <h2>We don't just<br />reach people.<br />We <em>touch</em> lives.</h2>
+      <span>02 — 06</span>
+    </div>
+  </section>
+  <section id="services" class="section services">
+    <div class="section-no reveal">
+      02 / WHAT WE DO <span>END-TO-END SOLUTIONS</span>
+    </div>
+    <div class="services-intro reveal">
+      <h2>Smart ideas.<br /><em>Hands-on</em> execution.</h2>
+      <p>
+        Marketing services built around real client needs — from first contact
+        to measurable results.
+      </p>
+    </div>
+    <div class="service-list">
+      <article class="service reveal">
+        <span>01</span>
+        <div>
+          <small>FIELD</small>
+          <h3>Field Marketing</h3>
+          <p>B2B & B2C</p>
+        </div>
+        <b>↗</b>
+      </article>
+      <article class="service reveal">
+        <span>02</span>
+        <div>
+          <small>EXPERIENCE</small>
+          <h3>Face-to-Face Campaigns</h3>
+          <p>Roadshows · POS Promotions · Door-to-Door</p>
+        </div>
+        <b>↗</b>
+      </article>
+      <article class="service reveal">
+        <span>03</span>
+        <div>
+          <small>CONNECT</small>
+          <h3>Database & Digital</h3>
+          <p>Email · Call Centers · Database Marketing</p>
+        </div>
+        <b>↗</b>
+      </article>
+      <article class="service reveal">
+        <span>04</span>
+        <div>
+          <small>MAKE</small>
+          <h3>Design & Printing</h3>
+          <p>Uniforms · Flyers · Banners · Giveaways</p>
+        </div>
+        <b>↗</b>
+      </article>
+    </div>
+  </section>
+  <section class="numbers">
+    <div class="number reveal">
+      <strong>20<span>+</span></strong
+      ><small>YEARS</small>
+      <p>Experience in marketing</p>
+    </div>
+    <div class="number reveal">
+      <strong>40<span>+</span></strong
+      ><small>CLIENTS</small>
+      <p>Major clients across industries</p>
+    </div>
+    <div class="number reveal">
+      <strong>178</strong><small>OUTLETS</small>
+      <p>Shell distributor outlets</p>
+    </div>
+    <div class="number reveal">
+      <strong>3—100</strong><small>METERS</small>
+      <p>Production range</p>
+    </div>
+  </section>
+  <section class="clients section">
+    <div class="section-no reveal">
+      03 / TRUSTED BY <span>PARTNERS & BRANDS</span>
+    </div>
+    <div class="client-intro reveal">
+      <p>
+        More than two decades of turning direct communication into brand
+        loyalty.
+      </p>
+      <div class="client-logos">
+        <span>TotalEnergies</span><span>P&amp;G</span><span>Henkel</span
+        ><span>Castrol</span><span>Pepsi</span><span>Huawei</span>
+      </div>
+    </div>
+  </section>
+  <section class="mission">
+    <div class="mv reveal">
+      <span>MISSION / 01</span>
+      <h3>Understand.<br />Solve.<br /><em>Connect.</em></h3>
+      <p>
+        Develop and deliver marketing services that genuinely meet clients’ real
+        needs — understanding goals, solving challenges and creating meaningful
+        human connections that drive measurable results.
+      </p>
+    </div>
+    <div class="mv vision reveal">
+      <span>VISION / 02</span>
+      <h3>Human-centric<br />marketing with<br /><em>lasting impact.</em></h3>
+      <p>
+        Transform marketing into a human-centric experience — one that inspires
+        action, builds trust, and makes a lasting impact on people's lives.
+      </p>
+    </div>
+  </section>
+  <section id="work" class="section work">
+    <div class="section-no reveal">
+      04 / SELECTED WORK <span>THE VISUAL ARCHIVE</span>
+    </div>
+    <div class="work-head reveal">
+      <h2>Work that<br /><em>moves.</em></h2>
+      <p>
+        Selected visuals from the supplied company portfolio — activations,
+        field operations, production and brand experiences.
+      </p>
+    </div>
+    <div class="filter-row reveal">
+      <span>ALL WORK</span><span>FIELD</span><span>ACTIVATION</span
+      ><span>PRODUCTION</span><span>EVENTS</span>
+    </div>
+    <div class="project-grid">
+      <button
+        type="button"
+        class="project reveal"
+        *ngFor="let p of projects"
+        (click)="openProject(p)"
+      >
+        <img [src]="p.image" [alt]="p.title" />
+        <div class="project-shade"></div>
+        <span class="project-num">{{ p.index }}</span>
+        <div class="project-info">
+          <small>{{ p.category }}</small>
+          <h3>{{ p.title }}</h3>
+          <b>View project ↗</b>
+        </div>
+      </button>
+    </div>
+  </section>
+  <section class="production section">
+    <div class="production-copy reveal">
+      <p class="kicker">Production capability</p>
+      <h2>From <em>3m</em><br />to <em>100m.</em></h2>
+      <p>
+        For Shell, the team established approximately 178 distributor outlets
+        across Egypt. Branding covered shops, oil stands, posters and light
+        boxes, with regular monthly follow-up and maintenance.
+      </p>
+      <div class="prod-stat">
+        <strong>178</strong><span>distributor outlets<br />across Egypt</span>
+      </div>
+    </div>
+    <div class="production-visual reveal">
+      <img src="assets/projects/project-22.jpg" alt="Production and branding" />
+      <div class="corner c1">03M</div>
+      <div class="corner c2">100M</div>
+      <div class="scan"></div>
+      <div class="prod-label">SHELL / PRODUCTION</div>
+    </div>
+  </section>
+  <section class="quote">
+    <div class="quote-no">05</div>
+    <div class="quote-mark">“</div>
+    <blockquote>
+      Marketing's job is never done.<br />It's about <em>perpetual motion.</em>
+    </blockquote>
+    <p>We must continue to innovate every day.</p>
+  </section>
+  <section id="contact" class="contact section">
+    <div class="contact-no">06 / CONTACT</div>
+    <div class="contact-title reveal">
+      <p class="kicker">Ready when you are.</p>
+      <h2>Let's make<br />something <em>move.</em></h2>
+    </div>
+    <div class="contact-grid reveal">
+      <div>
+        <small>VISIT</small>
+        <p>190 Emtedad Ramses Street,<br />Nasr City, Cairo</p>
+      </div>
+      <div>
+        <small>CALL / EMAIL</small>
+        <p>
+          <a href="tel:01003107222">010-031-07222</a><br /><a
+            href="mailto:Aymanpm99@gmail.com"
+            >Aymanpm99@gmail.com</a
+          >
+        </p>
+      </div>
+      <a class="contact-button" href="mailto:Aymanpm99@gmail.com"
+        >Start a project <span>↗</span></a
+      >
+    </div>
+  </section>
+</main>
+<footer>
+  <b>LIMITLESS<span>.</span></b
+  ><span>THE FUTURE IS LIMITLESS.</span><span>© 2026</span>
+</footer>
+<div class="lightbox" *ngIf="selectedProject" (click)="closeProject()">
+  <button type="button" class="close" (click)="closeProject()">×</button
+  ><button
+    type="button"
+    class="lb-prev"
+    (click)="$event.stopPropagation(); prevProject()"
+  >
+    ←</button
+  ><button
+    type="button"
+    class="lb-next"
+    (click)="$event.stopPropagation(); nextProject()"
+  >
+    →
+  </button>
+  <div class="lightbox-inner" (click)="$event.stopPropagation()">
+    <div class="lightbox-image">
+      <img [src]="selectedProject.image" [alt]="selectedProject.title" />
+    </div>
+    <div class="lightbox-meta">
+      <span>{{ selectedProject.index }} / 30</span
+      ><small>{{ selectedProject.category }}</small>
+      <h2>{{ selectedProject.title }}</h2>
+      <p>Selected work from Limitless Marketing Services.</p>
+    </div>
+  </div>
+</div>
