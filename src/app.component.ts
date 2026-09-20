@@ -9,6 +9,8 @@ interface Project {
   index: string;
 }
 
+type WorkFilter = 'All' | 'Field' | 'Activation' | 'Production' | 'Events';
+
 @Component({
   selector: 'lm-root',
   standalone: true,
@@ -21,24 +23,26 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   scrollProgress = 0;
   loaded = false;
   activeSection = 'home';
+  activeFilter: WorkFilter = 'All';
+
+  readonly filters: WorkFilter[] = ['All', 'Field', 'Activation', 'Production', 'Events'];
 
   private revealObserver?: IntersectionObserver;
   private sectionObserver?: IntersectionObserver;
+  private scrollFrame = 0;
+  private touchStartX: number | null = null;
 
-  // Curated only from the supplied company portfolio. Low-impact logos, duplicates and weak/dated visuals were removed from the gallery.
   private readonly projectData: Omit<Project, 'index'>[] = [
-    { title: 'People & Brand Experience', category: 'Field Marketing', image: 'assets/projects/work-03.webp' },
-    { title: 'Retail Activation', category: 'POS / Field Marketing', image: 'assets/projects/work-09.webp' },
     { title: 'Exhibition Presence', category: 'Brand Activation', image: 'assets/projects/work-12.webp' },
-    { title: 'Experience Build', category: 'Design / Production', image: 'assets/projects/work-14.webp' },
+    { title: 'Experience Build', category: 'Production', image: 'assets/projects/work-14.webp' },
     { title: 'Night Activation', category: 'Field Marketing', image: 'assets/projects/work-15.webp' },
     { title: 'Retail Experience', category: 'Brand Activation', image: 'assets/projects/work-18.webp' },
-    { title: 'Live Event Stage', category: 'Face-to-Face', image: 'assets/projects/work-19.webp' },
-    { title: 'Premium Brand Space', category: 'Experiential', image: 'assets/projects/work-20.webp' },
-    { title: 'Retail Branding', category: 'Design / Printing', image: 'assets/projects/work-21.webp' },
-    { title: 'Summit Experience', category: 'Event Activation', image: 'assets/projects/work-22.webp' },
+    { title: 'Live Event Stage', category: 'Events', image: 'assets/projects/work-19.webp' },
+    { title: 'Premium Brand Space', category: 'Activation', image: 'assets/projects/work-20.webp' },
+    { title: 'Retail Branding', category: 'Production', image: 'assets/projects/work-21.webp' },
+    { title: 'Summit Experience', category: 'Events', image: 'assets/projects/work-22.webp' },
     { title: 'Mobile Brand Activation', category: 'Field Marketing', image: 'assets/projects/work-43.webp' },
-    { title: 'Campaign Launch', category: 'Brand Activation', image: 'assets/projects/work-44.webp' }
+    { title: 'Campaign Launch', category: 'Field Marketing', image: 'assets/projects/work-44.webp' }
   ];
 
   projects: Project[] = this.projectData.map((project, index) => ({
@@ -46,76 +50,110 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     index: String(index + 1).padStart(2, '0')
   }));
 
-  ngAfterViewInit(): void {
-    window.setTimeout(() => (this.loaded = true), 450);
-    document.body.classList.add('ultimate');
+  get filteredProjects(): Project[] {
+    if (this.activeFilter === 'All') return this.projects;
 
-    gsap.timeline({ defaults: { ease: 'power3.out' } })
-      .from('.hero-kicker', { y: 24, opacity: 0, duration: 0.7, delay: 0.15 })
-      .from('.hero-title .line', { yPercent: 120, opacity: 0, duration: 1.05, stagger: 0.1, ease: 'power4.out' }, '-=.35')
-      .from('.hero-bottom', { y: 18, opacity: 0, duration: 0.7 }, '-=.6')
-      .from('.hero-stamp', { scale: 0.65, opacity: 0, rotate: -10, duration: 0.75 }, '-=.55')
-      .from('.hero-photo', { scale: 1.08, opacity: 0, duration: 1.2 }, '<');
+    return this.projects.filter(project => {
+      if (this.activeFilter === 'Field') return project.category.includes('Field');
+      if (this.activeFilter === 'Activation') return project.category.includes('Activation');
+      if (this.activeFilter === 'Production') return project.category.includes('Production');
+      return project.category.includes('Events');
+    });
+  }
+
+  ngAfterViewInit(): void {
+    window.setTimeout(() => (this.loaded = true), 700);
+    document.body.classList.add('ultimate');
+    this.setScrollVars();
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!reduceMotion) {
+      gsap.timeline({ defaults: { ease: 'power3.out' } })
+        .from('.hero-kicker', { y: 22, opacity: 0, duration: 0.65, delay: 0.08 })
+        .from('.hero-title .line', { yPercent: 110, opacity: 0, duration: 0.95, stagger: 0.08, ease: 'power4.out' }, '-=.28')
+        .from('.hero-bottom', { y: 18, opacity: 0, duration: 0.6 }, '-=.5')
+        .from('.hero-stamp', { scale: 0.72, opacity: 0, rotate: -14, duration: 0.65 }, '-=.45')
+        .from('.hero-photo', { scale: 1.06, opacity: 0, duration: 1.15 }, '<');
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+    }
 
     this.revealObserver = new IntersectionObserver(
       entries => entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          if (entry.target.classList.contains('number')) {
-            this.animateStat(entry.target as HTMLElement);
-          }
-          this.revealObserver?.unobserve(entry.target);
-        }
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        if (entry.target.classList.contains('number')) this.animateStat(entry.target as HTMLElement);
+        this.revealObserver?.unobserve(entry.target);
       }),
-      { threshold: 0.08, rootMargin: '0px 0px -8% 0px' }
+      { threshold: 0.08, rootMargin: '0px 0px -10% 0px' }
     );
 
     document.querySelectorAll('.reveal').forEach((element, index) => {
-      element.setAttribute('style', `--reveal-delay:${Math.min(index * 18, 180)}ms`);
-      this.revealObserver!.observe(element);
+      element.setAttribute('style', `--reveal-delay:${Math.min(index * 22, 220)}ms`);
+      this.revealObserver?.observe(element);
     });
 
     this.sectionObserver = new IntersectionObserver(
       entries => entries.forEach(entry => {
         if (entry.isIntersecting) this.activeSection = entry.target.id || this.activeSection;
       }),
-      { threshold: 0.18, rootMargin: '-12% 0px -58% 0px' }
+      { threshold: 0.18, rootMargin: '-14% 0px -58% 0px' }
     );
 
-    document.querySelectorAll('section[id]').forEach(element => this.sectionObserver!.observe(element));
+    document.querySelectorAll('section[id]').forEach(element => this.sectionObserver?.observe(element));
 
     const hash = window.location.hash.slice(1);
-    if (hash) window.setTimeout(() => this.scrollTo(hash), 0);
-
+    if (hash) window.setTimeout(() => this.scrollTo(hash), 120);
   }
 
   ngOnDestroy(): void {
     this.revealObserver?.disconnect();
     this.sectionObserver?.disconnect();
+    if (this.scrollFrame) cancelAnimationFrame(this.scrollFrame);
     document.body.classList.remove('ultimate', 'menu-locked', 'locked');
   }
 
   @HostListener('window:scroll')
   onScroll(): void {
-    const max = document.documentElement.scrollHeight - innerHeight;
-    this.scrollProgress = max > 0 ? Math.min(100, Math.max(0, (scrollY / max) * 100)) : 0;
+    if (this.scrollFrame) return;
+    this.scrollFrame = requestAnimationFrame(() => {
+      this.scrollFrame = 0;
+      this.setScrollVars();
+    });
+  }
+
+  private setScrollVars(): void {
+    const max = Math.max(0, document.documentElement.scrollHeight - innerHeight);
+    this.scrollProgress = max ? Math.min(100, Math.max(0, (scrollY / max) * 100)) : 0;
+    document.documentElement.style.setProperty('--scroll-y', `${scrollY}px`);
   }
 
   @HostListener('document:keydown', ['$event'])
   onKey(event: KeyboardEvent): void {
-    if (event.key === 'Escape') {
-      this.closeProject();
-      this.menuOpen = false;
-      document.body.classList.remove('menu-locked');
-    }
+    if (event.key !== 'Escape') return;
+    if (this.selectedProject) this.closeProject();
+    if (this.menuOpen) this.closeMenu();
   }
 
   @HostListener('window:resize')
   onResize(): void {
-    if (innerWidth > 800 && this.menuOpen) {
-      this.menuOpen = false;
-      document.body.classList.remove('menu-locked');
-    }
+    if (innerWidth > 900 && this.menuOpen) this.closeMenu();
+  }
+
+  @HostListener('document:touchstart', ['$event'])
+  onTouchStart(event: TouchEvent): void {
+    if (this.selectedProject && event.touches.length === 1) this.touchStartX = event.touches[0].clientX;
+  }
+
+  @HostListener('document:touchend', ['$event'])
+  onTouchEnd(event: TouchEvent): void {
+    if (!this.selectedProject || this.touchStartX === null || event.changedTouches.length !== 1) return;
+    const delta = event.changedTouches[0].clientX - this.touchStartX;
+    this.touchStartX = null;
+    if (Math.abs(delta) < 55) return;
+    if (delta > 0) this.prevProject();
+    else this.nextProject();
   }
 
   private animateStat(element: HTMLElement): void {
@@ -130,19 +168,33 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
     const suffix = strong.dataset['suffix'] ?? '';
     const state = { value: 0 };
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduced) {
+      strong.textContent = `${target}${suffix}`;
+      return;
+    }
+
     gsap.to(state, {
       value: target,
-      duration: 1.25,
+      duration: 1.1,
       ease: 'power2.out',
-      onUpdate: () => {
-        strong.textContent = `${Math.round(state.value)}${suffix}`;
-      }
+      onUpdate: () => (strong.textContent = `${Math.round(state.value)}${suffix}`)
     });
   }
 
   toggleMenu(): void {
-    this.menuOpen = !this.menuOpen;
-    document.body.classList.toggle('menu-locked', this.menuOpen);
+    this.menuOpen ? this.closeMenu() : this.openMenu();
+  }
+
+  openMenu(): void {
+    this.menuOpen = true;
+    document.body.classList.add('menu-locked');
+  }
+
+  closeMenu(): void {
+    this.menuOpen = false;
+    document.body.classList.remove('menu-locked');
   }
 
   navigate(event: Event, id: string): void {
@@ -156,8 +208,11 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
     history.replaceState(null, '', `#${id}`);
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    this.menuOpen = false;
-    document.body.classList.remove('menu-locked');
+    this.closeMenu();
+  }
+
+  setFilter(filter: WorkFilter): void {
+    this.activeFilter = filter;
   }
 
   openProject(project: Project): void {
@@ -180,5 +235,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     if (!this.selectedProject) return;
     const index = this.projects.findIndex(project => project.index === this.selectedProject!.index);
     this.selectedProject = this.projects[(index + 1) % this.projects.length];
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

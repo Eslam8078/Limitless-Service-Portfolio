@@ -1,37 +1,38 @@
-<div class="loader" [class.done]="loaded">
+<div class="loader" [class.done]="loaded" aria-hidden="true">
   <div class="loader-top"><span>LIMITLESS</span><span>MARKETING SERVICES</span></div>
   <div class="loader-word">THE FUTURE IS <b>LIMITLESS<span>.</span></b></div>
   <div class="loader-line"><i></i></div>
   <small>MARKETING / PEOPLE / MOTION</small>
 </div>
 
-<div class="progress"><i [style.width.%]="scrollProgress"></i></div>
+<div class="progress" aria-hidden="true"><i [style.width.%]="scrollProgress"></i></div>
 
 <header class="nav" [class.scrolled]="scrollProgress > 3">
   <a class="brand" href="#home" aria-label="Go to home" (click)="navigate($event, 'home')">
-    <img class="brand-logo" src="assets/limitless-logo-premium.webp" alt="Limitless Marketing Services">
+    <img class="brand-logo" src="assets/limitless-logo-premium.webp" width="624" height="380" alt="Limitless Marketing Services">
   </a>
 
-  <div class="mobile-backdrop" [class.show]="menuOpen" (click)="toggleMenu" aria-hidden="true"></div>
-  <nav [class.open]="menuOpen" aria-label="Main navigation">
-    <a href="#home" [class.active]="activeSection==='home'" (click)="navigate($event, 'home')">Home</a>
-    <a href="#about" [class.active]="activeSection==='about'" (click)="navigate($event, 'about')">About</a>
-    <a href="#services" [class.active]="activeSection==='services'" (click)="navigate($event, 'services')">Services</a>
-    <a href="#work" [class.active]="activeSection==='work'" (click)="navigate($event, 'work')">Work</a>
-    <a href="#production" [class.active]="activeSection==='production'" (click)="navigate($event, 'production')">Production</a>
-    <a href="#clients" [class.active]="activeSection==='clients'" (click)="navigate($event, 'clients')">Clients</a>
-    <a href="#contact" [class.active]="activeSection==='contact'" (click)="navigate($event, 'contact')">Contact</a>
-    <a class="nav-cta" href="#contact" (click)="navigate($event, 'contact')">Start a project <span>↗</span></a>
-  </nav>
-
-  <button type="button" class="menu" [class.open]="menuOpen" aria-label="Toggle menu" [attr.aria-expanded]="menuOpen" (click)="toggleMenu">
+  <button type="button" class="menu" [class.open]="menuOpen" aria-label="Toggle menu" [attr.aria-expanded]="menuOpen" aria-controls="main-navigation" (click)="toggleMenu">
     <i></i><i></i>
   </button>
+
+  <div class="mobile-backdrop" [class.show]="menuOpen" (click)="closeMenu()" aria-hidden="true"></div>
+
+  <nav id="main-navigation" [class.open]="menuOpen" aria-label="Main navigation">
+    <a href="#home" [class.active]="activeSection==='home'" [attr.aria-current]="activeSection==='home' ? 'page' : null" (click)="navigate($event, 'home')">Home</a>
+    <a href="#about" [class.active]="activeSection==='about'" [attr.aria-current]="activeSection==='about' ? 'location' : null" (click)="navigate($event, 'about')">About</a>
+    <a href="#services" [class.active]="activeSection==='services'" [attr.aria-current]="activeSection==='services' ? 'location' : null" (click)="navigate($event, 'services')">Services</a>
+    <a href="#work" [class.active]="activeSection==='work'" [attr.aria-current]="activeSection==='work' ? 'location' : null" (click)="navigate($event, 'work')">Work</a>
+    <a href="#production" [class.active]="activeSection==='production'" [attr.aria-current]="activeSection==='production' ? 'location' : null" (click)="navigate($event, 'production')">Production</a>
+    <a href="#clients" [class.active]="activeSection==='clients'" [attr.aria-current]="activeSection==='clients' ? 'location' : null" (click)="navigate($event, 'clients')">Clients</a>
+    <a href="#contact" [class.active]="activeSection==='contact'" [attr.aria-current]="activeSection==='contact' ? 'location' : null" (click)="navigate($event, 'contact')">Contact</a>
+    <a class="nav-cta" href="#contact" (click)="navigate($event, 'contact')">Start a project <span>↗</span></a>
+  </nav>
 </header>
 
 <main>
   <section id="home" class="hero">
-    <img class="hero-photo" src="assets/projects/hero.webp" alt="Limitless marketing activation" fetchpriority="high" decoding="async">
+    <img class="hero-photo" src="assets/projects/hero.webp" alt="Limitless brand activation booth" width="1600" height="950" fetchpriority="high" decoding="async">
     <div class="hero-overlay"></div>
     <div class="hero-grid"></div>
     <div class="hero-orb orb-a"></div>
@@ -43,17 +44,17 @@
       <p class="hero-kicker"><b></b>20+ YEARS OF HUMAN-CENTRIC MARKETING</p>
       <h1 class="hero-title"><span class="line">The future is</span><span class="line"><em>limitless.</em></span></h1>
       <div class="hero-bottom">
-        <p>We build real connections, turn consumers into loyal customers, and make brands move in the real world.</p>
-        <button type="button" class="circle-cta" (click)="scrollTo('work')"><span>Explore<br>our work</span><b>↘</b></button>
+        <p>Real people. Real connections. Real-world activation, production and direct marketing built around measurable impact.</p>
+        <button type="button" class="circle-cta" (click)="scrollTo('work')" aria-label="Explore selected work"><span>Explore<br>our work</span><b>↘</b></button>
       </div>
     </div>
 
-    <div class="hero-meta"><span>MARKETING</span><span>PEOPLE</span><span>MOTION</span><span>RESULTS</span></div>
+    <div class="hero-meta" aria-hidden="true"><span>MARKETING</span><span>PEOPLE</span><span>MOTION</span><span>RESULTS</span></div>
     <div class="hero-stamp"><strong>20+</strong><span>YEARS OF<br>EXPERIENCE</span></div>
     <div class="hero-scroll">SCROLL TO EXPLORE <i></i></div>
   </section>
 
-  <div class="marquee"><div class="marquee-track">
+  <div class="marquee" aria-label="Services"><div class="marquee-track">
     <span>FIELD MARKETING</span><b>✦</b><span>BRAND ACTIVATION</span><b>✦</b><span>ROADSHOWS</span><b>✦</b><span>PRODUCTION</span><b>✦</b><span>DIGITAL</span><b>✦</b>
     <span>FIELD MARKETING</span><b>✦</b><span>BRAND ACTIVATION</span><b>✦</b><span>ROADSHOWS</span><b>✦</b><span>PRODUCTION</span><b>✦</b><span>DIGITAL</span><b>✦</b>
   </div></div>
@@ -68,7 +69,7 @@
         <div class="scribble">Human connection <span>↗</span></div>
       </div>
     </div>
-    <div class="about-image reveal"><img src="assets/projects/about.webp" alt="Limitless field marketing activation" loading="lazy" decoding="async"><div class="image-caption"><span>LIMITLESS / FIELD</span><span>PEOPLE → BRANDS</span></div></div>
+    <div class="about-image reveal"><img src="assets/projects/about.webp" alt="Limitless team at a live brand activation" width="1440" height="900" loading="lazy" decoding="async"><div class="image-caption"><span>LIMITLESS / PEOPLE</span><span>TEAM → EXPERIENCE</span></div></div>
   </section>
 
   <section class="statement"><div class="statement-word">PEOPLE</div><div class="statement-content reveal"><small>THE LIMITLESS APPROACH</small><h2>We don't just<br>reach people.<br>We <em>touch</em> lives.</h2><span>02 — 06</span></div></section>
@@ -93,7 +94,11 @@
 
   <section id="clients" class="clients section">
     <div class="section-no reveal">03 / TRUSTED BY <span>PARTNERS &amp; BRANDS</span></div>
-    <div class="client-intro reveal"><p>More than two decades of turning direct communication into brand loyalty.</p><div class="client-logos"><span>TotalEnergies</span><span>P&amp;G</span><span>Henkel</span><span>Castrol</span><span>Pepsi</span><span>Huawei</span></div><div class="campaign-links"><small>CAMPAIGN LINKS FROM THE COMPANY PORTFOLIO</small><div><a href="https://www.facebook.com/TotalEnergiesEgypt/videos/454332177018250/" target="_blank" rel="noopener noreferrer">TotalEnergies video 01 ↗</a><a href="https://www.facebook.com/TotalEnergiesEgypt/videos/377907988217751/" target="_blank" rel="noopener noreferrer">TotalEnergies video 02 ↗</a><a href="https://www.facebook.com/TotalEnergiesEgypt/videos/935124774772140/" target="_blank" rel="noopener noreferrer">TotalEnergies video 03 ↗</a></div></div></div>
+    <div class="client-intro reveal">
+      <p>More than two decades of turning direct communication into brand loyalty.</p>
+      <div class="client-logos"><span>TotalEnergies</span><span>P&amp;G</span><span>Henkel</span><span>Castrol</span><span>Pepsi</span><span>Huawei</span></div>
+      <div class="campaign-links"><small>CAMPAIGN LINKS FROM THE COMPANY PORTFOLIO</small><div><a href="https://www.facebook.com/TotalEnergiesEgypt/videos/454332177018250/" target="_blank" rel="noopener noreferrer">TotalEnergies video 01 ↗</a><a href="https://www.facebook.com/TotalEnergiesEgypt/videos/377907988217751/" target="_blank" rel="noopener noreferrer">TotalEnergies video 02 ↗</a><a href="https://www.facebook.com/TotalEnergiesEgypt/videos/935124774772140/" target="_blank" rel="noopener noreferrer">TotalEnergies video 03 ↗</a></div></div>
+    </div>
   </section>
 
   <section class="mission">
@@ -102,12 +107,15 @@
   </section>
 
   <section id="work" class="section work">
-    <div class="section-no reveal">04 / SELECTED WORK <span>{{ projects.length }} CURATED PROJECTS</span></div>
-    <div class="work-head reveal"><h2>Work that<br><em>moves.</em></h2><p>Selected visuals from the supplied company portfolio. We removed standalone logos, duplicates and weaker visuals so the gallery stays focused on real work.</p></div>
-    <div class="filter-row reveal"><span>CURATED WORK</span><span>FIELD</span><span>ACTIVATION</span><span>PRODUCTION</span><span>EVENTS</span></div>
+    <div class="section-no reveal">04 / SELECTED WORK <span>{{ filteredProjects.length }} / {{ projects.length }} PROJECTS</span></div>
+    <div class="work-head reveal"><h2>Work that<br><em>moves.</em></h2><p>Curated from the supplied company portfolio. The gallery now favors clearer, more relevant campaign and event photography over generic, duplicated or weak visuals.</p></div>
+    <div class="filter-row reveal" role="group" aria-label="Filter selected work">
+      <button *ngFor="let filter of filters" type="button" [class.active]="activeFilter===filter" (click)="setFilter(filter)">{{ filter }}</button>
+    </div>
+
     <div class="project-grid">
-      <button type="button" class="project reveal" *ngFor="let p of projects" (click)="openProject(p)">
-        <img [src]="p.image" [alt]="p.title" loading="lazy" decoding="async">
+      <button type="button" class="project reveal" *ngFor="let p of filteredProjects" (click)="openProject(p)" [attr.aria-label]="'Open ' + p.title">
+        <img [src]="p.image" [alt]="p.title + ' — ' + p.category" width="1280" height="900" loading="lazy" decoding="async">
         <div class="project-shade"></div><span class="project-num">{{p.index}}</span>
         <div class="project-info"><small>{{p.category}}</small><h3>{{p.title}}</h3><b>View project ↗</b></div>
       </button>
@@ -116,7 +124,7 @@
 
   <section id="production" class="production section">
     <div class="production-copy reveal"><p class="kicker">Production capability</p><h2>From <em>3m</em><br>to <em>100m.</em></h2><p>For Shell, the team established approximately 178 distributor outlets across Egypt. Branding covered shops, oil stands, posters and light boxes, with regular monthly follow-up and maintenance.</p><div class="prod-stat"><strong>178</strong><span>distributor outlets<br>across Egypt</span></div></div>
-    <div class="production-visual reveal"><img src="assets/projects/production.webp" alt="Shell production and branding" loading="lazy" decoding="async"><div class="corner c1">03M</div><div class="corner c2">100M</div><div class="scan"></div><div class="prod-label">SHELL / PRODUCTION</div></div>
+    <div class="production-visual reveal"><img src="assets/projects/production.webp" alt="Selected event production and brand experience" width="1440" height="900" loading="lazy" decoding="async"><div class="corner c1">03M</div><div class="corner c2">100M</div><div class="scan"></div><div class="prod-label">SELECTED / PRODUCTION</div></div>
   </section>
 
   <section class="quote"><div class="quote-no">05</div><div class="quote-mark">“</div><blockquote>Marketing's job is never done.<br>It's about <em>perpetual motion.</em></blockquote><p>We must continue to innovate every day.</p></section>
@@ -132,14 +140,20 @@
   </section>
 </main>
 
-<footer><img src="assets/limitless-logo-premium.webp" alt="Limitless Marketing Services" class="footer-logo"><nav class="footer-links" aria-label="Footer navigation"><a href="#home" (click)="navigate($event, 'home')">Home</a><a href="#about" (click)="navigate($event, 'about')">About</a><a href="#services" (click)="navigate($event, 'services')">Services</a><a href="#work" (click)="navigate($event, 'work')">Work</a><a href="#production" (click)="navigate($event, 'production')">Production</a><a href="#clients" (click)="navigate($event, 'clients')">Clients</a><a href="#contact" (click)="navigate($event, 'contact')">Contact</a></nav><span>THE FUTURE IS LIMITLESS.</span><span>© 2026</span></footer>
+<footer>
+  <img src="assets/limitless-logo-premium.webp" alt="Limitless Marketing Services" class="footer-logo" width="624" height="380">
+  <nav class="footer-links" aria-label="Footer navigation"><a href="#home" (click)="navigate($event, 'home')">Home</a><a href="#about" (click)="navigate($event, 'about')">About</a><a href="#services" (click)="navigate($event, 'services')">Services</a><a href="#work" (click)="navigate($event, 'work')">Work</a><a href="#production" (click)="navigate($event, 'production')">Production</a><a href="#clients" (click)="navigate($event, 'clients')">Clients</a><a href="#contact" (click)="navigate($event, 'contact')">Contact</a></nav>
+  <span>THE FUTURE IS LIMITLESS.</span><span>© 2026</span>
+</footer>
 
-<div class="lightbox" *ngIf="selectedProject" (click)="closeProject()">
+<button type="button" class="back-top" [class.show]="scrollProgress > 15" (click)="scrollToTop" aria-label="Back to top">↑</button>
+
+<div class="lightbox" *ngIf="selectedProject" role="dialog" aria-modal="true" [attr.aria-label]="selectedProject.title" (click)="closeProject()">
   <button type="button" class="close" aria-label="Close project" (click)="closeProject()">×</button>
   <button type="button" class="lb-prev" aria-label="Previous project" (click)="$event.stopPropagation();prevProject()">←</button>
   <button type="button" class="lb-next" aria-label="Next project" (click)="$event.stopPropagation();nextProject()">→</button>
   <div class="lightbox-inner" (click)="$event.stopPropagation()">
-    <div class="lightbox-image"><img [src]="selectedProject.image" [alt]="selectedProject.title"></div>
-    <div class="lightbox-meta"><span>{{selectedProject.index}} / {{projects.length}}</span><small>{{selectedProject.category}}</small><h2>{{selectedProject.title}}</h2><p>Selected work from Limitless Marketing Services.</p></div>
+    <div class="lightbox-image"><img [src]="selectedProject.image" [alt]="selectedProject.title" width="1280" height="900"></div>
+    <div class="lightbox-meta"><span>{{selectedProject.index}} / {{projects.length}}</span><small>{{selectedProject.category}}</small><h2>{{selectedProject.title}}</h2><p>Selected work from Limitless Marketing Services.</p><div class="lightbox-hint">Use ← → or swipe on touch devices</div></div>
   </div>
 </div>
