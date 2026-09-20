@@ -5,12 +5,11 @@
   <small>MARKETING / PEOPLE / MOTION</small>
 </div>
 
-<div class="cursor" [class.visible]="cursorVisible"><span></span></div>
 <div class="progress"><i [style.width.%]="scrollProgress"></i></div>
 
 <header class="nav" [class.scrolled]="scrollProgress > 3">
   <a class="brand" href="#home" aria-label="Go to home" (click)="navigate($event, 'home')">
-    <img class="brand-logo" src="assets/limitless-logo.png" alt="Limitless Marketing Services" (error)="onLogoError($event)">
+    <img class="brand-logo" src="assets/limitless-logo-premium.webp" alt="Limitless Marketing Services">
   </a>
 
   <div class="mobile-backdrop" [class.show]="menuOpen" (click)="toggleMenu" aria-hidden="true"></div>
@@ -32,7 +31,8 @@
 
 <main>
   <section id="home" class="hero">
-    <canvas id="webgl-canvas" aria-hidden="true"></canvas>
+    <img class="hero-photo" src="assets/projects/hero.webp" alt="Limitless marketing activation" fetchpriority="high" decoding="async">
+    <div class="hero-overlay"></div>
     <div class="hero-grid"></div>
     <div class="hero-orb orb-a"></div>
     <div class="hero-orb orb-b"></div>
@@ -68,7 +68,7 @@
         <div class="scribble">Human connection <span>↗</span></div>
       </div>
     </div>
-    <div class="about-image reveal"><img src="assets/projects/project-07.jpg" alt="Limitless field marketing activation" loading="lazy"><div class="image-caption"><span>LIMITLESS / FIELD</span><span>PEOPLE → BRANDS</span></div></div>
+    <div class="about-image reveal"><img src="assets/projects/about.webp" alt="Limitless field marketing activation" loading="lazy" decoding="async"><div class="image-caption"><span>LIMITLESS / FIELD</span><span>PEOPLE → BRANDS</span></div></div>
   </section>
 
   <section class="statement"><div class="statement-word">PEOPLE</div><div class="statement-content reveal"><small>THE LIMITLESS APPROACH</small><h2>We don't just<br>reach people.<br>We <em>touch</em> lives.</h2><span>02 — 06</span></div></section>
@@ -85,9 +85,9 @@
   </section>
 
   <section class="numbers">
-    <div class="number reveal"><strong>20<span>+</span></strong><small>YEARS</small><p>Experience in marketing</p></div>
-    <div class="number reveal"><strong>40<span>+</span></strong><small>CLIENTS</small><p>Major clients across industries</p></div>
-    <div class="number reveal"><strong>178</strong><small>OUTLETS</small><p>Shell distributor outlets</p></div>
+    <div class="number reveal"><strong data-count="20" data-suffix="+">0+</strong><small>YEARS</small><p>Experience in marketing</p></div>
+    <div class="number reveal"><strong data-count="40" data-suffix="+">0+</strong><small>CLIENTS</small><p>Major clients across industries</p></div>
+    <div class="number reveal"><strong data-count="178">0</strong><small>OUTLETS</small><p>Shell distributor outlets</p></div>
     <div class="number reveal"><strong>3—100</strong><small>METERS</small><p>Production range</p></div>
   </section>
 
@@ -116,7 +116,7 @@
 
   <section id="production" class="production section">
     <div class="production-copy reveal"><p class="kicker">Production capability</p><h2>From <em>3m</em><br>to <em>100m.</em></h2><p>For Shell, the team established approximately 178 distributor outlets across Egypt. Branding covered shops, oil stands, posters and light boxes, with regular monthly follow-up and maintenance.</p><div class="prod-stat"><strong>178</strong><span>distributor outlets<br>across Egypt</span></div></div>
-    <div class="production-visual reveal"><img src="assets/projects/project-27.jpg" alt="Shell production and branding" loading="lazy"><div class="corner c1">03M</div><div class="corner c2">100M</div><div class="scan"></div><div class="prod-label">SHELL / PRODUCTION</div></div>
+    <div class="production-visual reveal"><img src="assets/projects/production.webp" alt="Shell production and branding" loading="lazy" decoding="async"><div class="corner c1">03M</div><div class="corner c2">100M</div><div class="scan"></div><div class="prod-label">SHELL / PRODUCTION</div></div>
   </section>
 
   <section class="quote"><div class="quote-no">05</div><div class="quote-mark">“</div><blockquote>Marketing's job is never done.<br>It's about <em>perpetual motion.</em></blockquote><p>We must continue to innovate every day.</p></section>
@@ -132,7 +132,7 @@
   </section>
 </main>
 
-<footer><img src="assets/limitless-logo.png" alt="Limitless Marketing Services" class="footer-logo" (error)="onLogoError($event)"><nav class="footer-links" aria-label="Footer navigation"><a href="#home" (click)="navigate($event, 'home')">Home</a><a href="#about" (click)="navigate($event, 'about')">About</a><a href="#services" (click)="navigate($event, 'services')">Services</a><a href="#work" (click)="navigate($event, 'work')">Work</a><a href="#production" (click)="navigate($event, 'production')">Production</a><a href="#clients" (click)="navigate($event, 'clients')">Clients</a><a href="#contact" (click)="navigate($event, 'contact')">Contact</a></nav><span>THE FUTURE IS LIMITLESS.</span><span>© 2026</span></footer>
+<footer><img src="assets/limitless-logo-premium.webp" alt="Limitless Marketing Services" class="footer-logo"><nav class="footer-links" aria-label="Footer navigation"><a href="#home" (click)="navigate($event, 'home')">Home</a><a href="#about" (click)="navigate($event, 'about')">About</a><a href="#services" (click)="navigate($event, 'services')">Services</a><a href="#work" (click)="navigate($event, 'work')">Work</a><a href="#production" (click)="navigate($event, 'production')">Production</a><a href="#clients" (click)="navigate($event, 'clients')">Clients</a><a href="#contact" (click)="navigate($event, 'contact')">Contact</a></nav><span>THE FUTURE IS LIMITLESS.</span><span>© 2026</span></footer>
 
 <div class="lightbox" *ngIf="selectedProject" (click)="closeProject()">
   <button type="button" class="close" aria-label="Close project" (click)="closeProject()">×</button>

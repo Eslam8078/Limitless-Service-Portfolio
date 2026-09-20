@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, HostListener, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap';
-import * as THREE from 'three';
 
 interface Project {
   title: string;
@@ -22,36 +21,24 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   scrollProgress = 0;
   loaded = false;
   activeSection = 'home';
-  cursorX = 0;
-  cursorY = 0;
-  cursorVisible = false;
 
-  private observer?: IntersectionObserver;
+  private revealObserver?: IntersectionObserver;
   private sectionObserver?: IntersectionObserver;
-  private resizeHandler?: () => void;
-  private webgl?: {
-    renderer: THREE.WebGLRenderer;
-    scene: THREE.Scene;
-    camera: THREE.PerspectiveCamera;
-    points: THREE.Points;
-    geometry: THREE.BufferGeometry;
-    material: THREE.PointsMaterial;
-    frame: number;
-  };
-  private pointer = { x: 0, y: 0 };
 
-  // Curated from the supplied company images. Logos, duplicates and weak/low-impact visuals are intentionally excluded.
+  // Curated only from the supplied company portfolio. Low-impact logos, duplicates and weak/dated visuals were removed from the gallery.
   private readonly projectData: Omit<Project, 'index'>[] = [
-    { title: 'Field Activation', category: 'Experiential / Events', image: 'assets/projects/project-07.jpg' },
-    { title: 'Retail Presence', category: 'POS / Field Marketing', image: 'assets/projects/project-08.jpg' },
-    { title: 'Live Campaign', category: 'Face-to-Face', image: 'assets/projects/project-09.jpg' },
-    { title: 'Campaign Display', category: 'Brand Activation', image: 'assets/projects/project-11.jpg' },
-    { title: 'Outdoor Activation', category: 'Field Marketing', image: 'assets/projects/project-14.jpg' },
-    { title: 'Retail Experience', category: 'Brand Activation', image: 'assets/projects/project-18.jpg' },
-    { title: 'Event Experience', category: 'Face-to-Face', image: 'assets/projects/project-19.jpg' },
-    { title: 'Retail Branding', category: 'Design / Production', image: 'assets/projects/project-21.jpg' },
-    { title: 'Shell Retail', category: 'Production / Branding', image: 'assets/projects/project-27.jpg' },
-    { title: 'Castrol Campaign', category: 'Brand Activation', image: 'assets/projects/project-41.jpg' }
+    { title: 'People & Brand Experience', category: 'Field Marketing', image: 'assets/projects/work-03.webp' },
+    { title: 'Retail Activation', category: 'POS / Field Marketing', image: 'assets/projects/work-09.webp' },
+    { title: 'Exhibition Presence', category: 'Brand Activation', image: 'assets/projects/work-12.webp' },
+    { title: 'Experience Build', category: 'Design / Production', image: 'assets/projects/work-14.webp' },
+    { title: 'Night Activation', category: 'Field Marketing', image: 'assets/projects/work-15.webp' },
+    { title: 'Retail Experience', category: 'Brand Activation', image: 'assets/projects/work-18.webp' },
+    { title: 'Live Event Stage', category: 'Face-to-Face', image: 'assets/projects/work-19.webp' },
+    { title: 'Premium Brand Space', category: 'Experiential', image: 'assets/projects/work-20.webp' },
+    { title: 'Retail Branding', category: 'Design / Printing', image: 'assets/projects/work-21.webp' },
+    { title: 'Summit Experience', category: 'Event Activation', image: 'assets/projects/work-22.webp' },
+    { title: 'Mobile Brand Activation', category: 'Field Marketing', image: 'assets/projects/work-43.webp' },
+    { title: 'Campaign Launch', category: 'Brand Activation', image: 'assets/projects/work-44.webp' }
   ];
 
   projects: Project[] = this.projectData.map((project, index) => ({
@@ -60,66 +47,58 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }));
 
   ngAfterViewInit(): void {
-    requestAnimationFrame(() => (this.loaded = true));
-    this.initWebGL();
+    window.setTimeout(() => (this.loaded = true), 450);
+    document.body.classList.add('ultimate');
 
-    gsap.timeline()
-      .from('.hero-kicker', { y: 25, opacity: 0, duration: 0.8, ease: 'power3.out', delay: 0.25 })
-      .from('.hero-title .line', { y: 130, opacity: 0, duration: 1.25, stagger: 0.12, ease: 'power4.out' }, '-=.35')
-      .from('.hero-bottom,.hero-top,.hero-meta,.hero-stamp', { y: 22, opacity: 0, duration: 0.8, stagger: 0.08, ease: 'power3.out' }, '-=.65');
+    gsap.timeline({ defaults: { ease: 'power3.out' } })
+      .from('.hero-kicker', { y: 24, opacity: 0, duration: 0.7, delay: 0.15 })
+      .from('.hero-title .line', { yPercent: 120, opacity: 0, duration: 1.05, stagger: 0.1, ease: 'power4.out' }, '-=.35')
+      .from('.hero-bottom', { y: 18, opacity: 0, duration: 0.7 }, '-=.6')
+      .from('.hero-stamp', { scale: 0.65, opacity: 0, rotate: -10, duration: 0.75 }, '-=.55')
+      .from('.hero-photo', { scale: 1.08, opacity: 0, duration: 1.2 }, '<');
 
-    this.observer = new IntersectionObserver(
+    this.revealObserver = new IntersectionObserver(
       entries => entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('is-visible');
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          if (entry.target.classList.contains('number')) {
+            this.animateStat(entry.target as HTMLElement);
+          }
+          this.revealObserver?.unobserve(entry.target);
+        }
       }),
-      { threshold: 0.08, rootMargin: '0px 0px -7% 0px' }
+      { threshold: 0.08, rootMargin: '0px 0px -8% 0px' }
     );
 
-    document.querySelectorAll('.reveal').forEach(element => this.observer!.observe(element));
+    document.querySelectorAll('.reveal').forEach((element, index) => {
+      element.setAttribute('style', `--reveal-delay:${Math.min(index * 18, 180)}ms`);
+      this.revealObserver!.observe(element);
+    });
 
     this.sectionObserver = new IntersectionObserver(
       entries => entries.forEach(entry => {
         if (entry.isIntersecting) this.activeSection = entry.target.id || this.activeSection;
       }),
-      { threshold: 0.2, rootMargin: '-12% 0px -55% 0px' }
+      { threshold: 0.18, rootMargin: '-12% 0px -58% 0px' }
     );
 
     document.querySelectorAll('section[id]').forEach(element => this.sectionObserver!.observe(element));
-    document.body.classList.add('ultimate');
 
     const hash = window.location.hash.slice(1);
-    if (hash) setTimeout(() => this.scrollTo(hash), 0);
+    if (hash) window.setTimeout(() => this.scrollTo(hash), 0);
+
   }
 
   ngOnDestroy(): void {
-    this.observer?.disconnect();
+    this.revealObserver?.disconnect();
     this.sectionObserver?.disconnect();
-    if (this.resizeHandler) removeEventListener('resize', this.resizeHandler);
-
-    if (this.webgl) {
-      cancelAnimationFrame(this.webgl.frame);
-      this.webgl.geometry.dispose();
-      this.webgl.material.dispose();
-      this.webgl.renderer.dispose();
-      this.webgl = undefined;
-    }
+    document.body.classList.remove('ultimate', 'menu-locked', 'locked');
   }
 
   @HostListener('window:scroll')
   onScroll(): void {
     const max = document.documentElement.scrollHeight - innerHeight;
-    this.scrollProgress = max > 0 ? (scrollY / max) * 100 : 0;
-  }
-
-  @HostListener('document:mousemove', ['$event'])
-  onMouse(event: MouseEvent): void {
-    this.cursorX = event.clientX;
-    this.cursorY = event.clientY;
-    this.cursorVisible = true;
-    document.documentElement.style.setProperty('--mx', `${event.clientX}px`);
-    document.documentElement.style.setProperty('--my', `${event.clientY}px`);
-    this.pointer.x = (event.clientX / innerWidth - 0.5) * 2;
-    this.pointer.y = (event.clientY / innerHeight - 0.5) * 2;
+    this.scrollProgress = max > 0 ? Math.min(100, Math.max(0, (scrollY / max) * 100)) : 0;
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -131,78 +110,34 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  private initWebGL(): void {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const canvas = document.getElementById('webgl-canvas') as HTMLCanvasElement | null;
-    if (!canvas) return;
-
-    let renderer: THREE.WebGLRenderer;
-    try {
-      renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
-    } catch {
-      canvas.style.display = 'none';
-      return;
+  @HostListener('window:resize')
+  onResize(): void {
+    if (innerWidth > 800 && this.menuOpen) {
+      this.menuOpen = false;
+      document.body.classList.remove('menu-locked');
     }
+  }
 
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
-    renderer.setSize(innerWidth, innerHeight);
+  private animateStat(element: HTMLElement): void {
+    if (element.dataset['animated'] === 'true') return;
+    element.dataset['animated'] = 'true';
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 100);
-    camera.position.z = 5;
+    const strong = element.querySelector<HTMLElement>('strong[data-count]');
+    if (!strong) return;
 
-    const count = innerWidth < 700 ? 450 : 900;
-    const positions = new Float32Array(count * 3);
+    const target = Number(strong.dataset['count']);
+    if (!Number.isFinite(target)) return;
 
-    for (let index = 0; index < count; index++) {
-      const radius = 3 + Math.random() * 4.8;
-      const angle = Math.random() * Math.PI * 2;
-      positions[index * 3] = Math.cos(angle) * radius;
-      positions[index * 3 + 1] = (Math.random() - 0.5) * 4.8;
-      positions[index * 3 + 2] = Math.sin(angle) * radius;
-    }
-
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-    const material = new THREE.PointsMaterial({
-      color: 0xff3b30,
-      size: innerWidth < 700 ? 0.012 : 0.016,
-      transparent: true,
-      opacity: 0.42,
-      blending: THREE.AdditiveBlending
+    const suffix = strong.dataset['suffix'] ?? '';
+    const state = { value: 0 };
+    gsap.to(state, {
+      value: target,
+      duration: 1.25,
+      ease: 'power2.out',
+      onUpdate: () => {
+        strong.textContent = `${Math.round(state.value)}${suffix}`;
+      }
     });
-
-    const points = new THREE.Points(geometry, material);
-    scene.add(points);
-
-    this.resizeHandler = () => {
-      renderer.setSize(innerWidth, innerHeight);
-      camera.aspect = innerWidth / innerHeight;
-      camera.updateProjectionMatrix();
-    };
-    addEventListener('resize', this.resizeHandler, { passive: true });
-
-    const tick = () => {
-      if (!this.webgl) return;
-      points.rotation.y += 0.00055;
-      points.rotation.x += 0.00015;
-      points.position.x += (this.pointer.x * 0.3 - points.position.x) * 0.018;
-      points.position.y += (-this.pointer.y * 0.2 - points.position.y) * 0.018;
-      renderer.render(scene, camera);
-      this.webgl.frame = requestAnimationFrame(tick);
-    };
-
-    this.webgl = {
-      renderer,
-      scene,
-      camera,
-      points,
-      geometry,
-      material,
-      frame: requestAnimationFrame(tick)
-    };
   }
 
   toggleMenu(): void {
@@ -223,11 +158,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     this.menuOpen = false;
     document.body.classList.remove('menu-locked');
-  }
-
-  onLogoError(event: Event): void {
-    const image = event.target as HTMLImageElement;
-    image.style.visibility = 'hidden';
   }
 
   openProject(project: Project): void {

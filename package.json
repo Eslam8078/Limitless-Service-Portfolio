@@ -8,26 +8,20 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "22.1.7",
     "@angular/common": "22.1.7",
     "@angular/compiler": "22.1.7",
     "@angular/core": "22.1.7",
-    "@angular/forms": "22.1.7",
     "@angular/platform-browser": "22.1.7",
-    "@angular/platform-browser-dynamic": "22.1.7",
-    "@angular/router": "22.1.7",
-    "rxjs": "^7.4.0",
+    "rxjs": "7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "0.16.3",
-    "three": "0.180.0",
     "gsap": "3.13.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "22.1.7",
     "@angular/cli": "22.1.7",
     "@angular/compiler-cli": "22.1.7",
-    "typescript": "6.0.3",
-    "@types/three": "0.180.0"
+    "typescript": "6.0.3"
   },
   "engines": {
     "node": ">=22.22.3"

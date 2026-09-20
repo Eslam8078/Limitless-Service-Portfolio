@@ -1,34 +1,22 @@
-# Limitless Portfolio — Ultimate (Fixed)
+# Limitless Marketing Services — Angular 22
 
-Angular 20 portfolio for Limitless Marketing Services.
-
-## Fixes in this package
-- All Angular packages are pinned to the same `20.1.8` patch version to prevent npm `ERESOLVE` peer-dependency conflicts.
-- `main.ts` now bootstraps the actual `AppComponent` instead of containing a second duplicate application component.
-- `tsconfig.app.json` points to the real standalone app entry point.
-- No `--force` or `--legacy-peer-deps` is required.
-
-## Requirements
-Use a Node.js version supported by Angular 20.1.x (Node `20.19+`, `22.12+`, or `24+`).
+Premium responsive marketing portfolio based on the supplied company material.
 
 ## Run
-```bash
+
+Use Node.js 22.22.3+ for Angular 22.
+
+```powershell
 npm install
 npm start
 ```
 
-## Production build
-```bash
+Production build:
+
+```powershell
 npm run build
 ```
 
-## If you previously installed the broken package
-Delete `node_modules` and `package-lock.json` in the project folder first, then run `npm install` again.
+## Latest pass
 
-```bash
-# Windows CMD
-rmdir /s /q node_modules
-del package-lock.json
-npm install
-npm start
-```
+This version removes the custom mouse cursor and Three.js/WebGL layer for a faster first load, converts the curated visuals to WebP, uses the supplied company logo, strengthens mobile UX, and adds lightweight scroll/hover/stat animations.

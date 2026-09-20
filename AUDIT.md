@@ -1,23 +1,17 @@
-# Limitless Portfolio — Final Code Audit
+# Limitless Angular 22 — final performance/UI pass
 
-## Fixed
-- Replaced the generated text/CSS logo with a branded asset derived from the supplied Limitless logo image.
-- Added semantic internal `<a href="#...">` navigation for Home, About, Services, Work, Production, Clients and Contact.
-- Added hash-aware navigation so section links work and update the URL without reloading the page.
-- Added `scroll-margin-top` so fixed navigation does not cover section headings.
-- Added a dedicated Clients section ID and footer navigation.
-- Added the three TotalEnergies Facebook campaign links that were present in the supplied company portfolio.
-- Curated the gallery down to 10 stronger supplied project images and removed logo-only/duplicate/weaker entries from the displayed gallery.
-- Hardened mobile navigation and link sizing.
-- Added logo fallback handling.
-- Fixed the strict TypeScript error in `main.ts` by typing the bootstrap rejection as `unknown`.
-- Updated page title, viewport metadata, description and theme color.
-
-## Dependency target
-Angular remains pinned to 22.1.7. TypeScript is pinned to 6.0.3, which satisfies Angular 22's documented TypeScript range `>=6.0.0 <6.1.0`. Node must be 22.22.3+ for Angular 22.
+- Removed the custom circular mouse cursor entirely.
+- Removed Three.js/WebGL particles to reduce initial JavaScript payload and improve mobile performance.
+- Kept GSAP for lightweight hero/counter motion.
+- Removed external Google Fonts import; the site now uses a system font stack, so there is no third-party font request on first load.
+- Replaced the gallery with a curated 12-image selection from the supplied portfolio and removed the unused original JPG set.
+- Converted the used imagery to optimized WebP assets, including dedicated hero/about/production images.
+- Kept the supplied company logo as a transparent WebP asset and use it in the header/footer.
+- Shortened the preloader and added a smoother hero entrance.
+- Added scroll-triggered reveal timing, stat count-up animation, service hover accent animation, project hover lift, focus states, and reduced-motion support.
+- Mobile navigation is scrollable, locks the page when open, and closes automatically on navigation or desktop resize.
+- Existing in-page navigation and company-provided campaign links were preserved.
+- Node/Angular package versions remain on Angular 22.1.7 / TypeScript 6.0.3.
 
 ## Verification
-- JSON syntax checked.
-- HTML structure parsed successfully: 11 sections, 22 links, 6 buttons, no missing href attributes.
-- Source references checked: the old `project-01.jpg` logo reference is no longer used in application code.
-- Full `npm install` / Angular build was not executed in this environment because the available runtime is below the project's Angular 22 Node requirement.
+Static reference checks pass for project assets and template event handlers. A full `npm install`/`ng build` was not completed in the tool environment because the dependency installation timed out; run the commands in the README on a machine meeting the Angular 22 Node requirement.
