@@ -1,35 +1,23 @@
-# Limitless Portfolio — Final Audit
+# Limitless Portfolio — Final Code Audit
 
-## Status
-- Angular packages: 22.1.7 (kept on Angular 22 as requested)
-- TypeScript: 6.0.0
-- Node.js requirement: >= 22.22.3
-- Zone.js: 0.16.3
-- Three.js: 0.180.0
-- GSAP: 3.13.0
+## Fixed
+- Replaced the generated text/CSS logo with a branded asset derived from the supplied Limitless logo image.
+- Added semantic internal `<a href="#...">` navigation for Home, About, Services, Work, Production, Clients and Contact.
+- Added hash-aware navigation so section links work and update the URL without reloading the page.
+- Added `scroll-margin-top` so fixed navigation does not cover section headings.
+- Added a dedicated Clients section ID and footer navigation.
+- Added the three TotalEnergies Facebook campaign links that were present in the supplied company portfolio.
+- Curated the gallery down to 10 stronger supplied project images and removed logo-only/duplicate/weaker entries from the displayed gallery.
+- Hardened mobile navigation and link sizing.
+- Added logo fallback handling.
+- Fixed the strict TypeScript error in `main.ts` by typing the bootstrap rejection as `unknown`.
+- Updated page title, viewport metadata, description and theme color.
 
-## Checks performed
-- Project configuration and TypeScript/HTML/CSS files reviewed.
-- All 45 project image paths referenced by the gallery were checked and are present.
-- Angular template tag counts were checked for balanced section/div/button tags.
-- Angular package versions were checked against current package availability and Angular's official compatibility guidance.
-- WebGL initialization now fails gracefully when WebGL is unavailable.
-- WebGL geometry/material are explicitly disposed on component destruction.
-- All interactive buttons explicitly use `type="button"`.
+## Dependency target
+Angular remains pinned to 22.1.7. TypeScript is pinned to 6.0.3, which satisfies Angular 22's documented TypeScript range `>=6.0.0 <6.1.0`. Node must be 22.22.3+ for Angular 22.
 
-## Local verification note
-A full `npm install` / `ng build` could not be completed in this environment because package installation timed out, and the available Node runtime here is 22.16.0 while Angular 22 requires Node 22.22.3+.
-
-On a machine with the required Node version, run:
-
-```powershell
-node -v
-npm -v
-Remove-Item -Recurse -Force node_modules -ErrorAction SilentlyContinue
-Remove-Item -Force package-lock.json -ErrorAction SilentlyContinue
-npm install
-npm run build
-```
-
-
-Final dependency fix: TypeScript pinned to 6.0.3 because Angular 22.1.x requires TypeScript >=6.0 <6.1; 6.0.3 is within that peer range.
+## Verification
+- JSON syntax checked.
+- HTML structure parsed successfully: 11 sections, 22 links, 6 buttons, no missing href attributes.
+- Source references checked: the old `project-01.jpg` logo reference is no longer used in application code.
+- Full `npm install` / Angular build was not executed in this environment because the available runtime is below the project's Angular 22 Node requirement.
