@@ -7,7 +7,7 @@
 
 <div class="progress" aria-hidden="true"><i [style.width.%]="scrollProgress"></i></div>
 
-<header class="nav" [class.scrolled]="scrollProgress > 3">
+<header class="nav" [class.scrolled]="scrollProgress > 3" [class.nav-hidden]="navHidden">
   <a class="brand" href="#home" aria-label="Go to home" (click)="navigate($event, 'home')">
     <img class="brand-logo" src="assets/limitless-logo-premium.webp" width="624" height="380" alt="Limitless Marketing Services">
   </a>
@@ -32,7 +32,7 @@
 
 <main>
   <section id="home" class="hero">
-    <img class="hero-photo" src="assets/projects/hero.webp" alt="Limitless brand activation booth" width="1600" height="950" fetchpriority="high" decoding="async">
+    <img class="hero-photo parallax-img" src="assets/projects/hero.webp" alt="Limitless live brand activation" width="1330" height="886" fetchpriority="high" decoding="async">
     <div class="hero-overlay"></div>
     <div class="hero-grid"></div>
     <div class="hero-orb orb-a"></div>
@@ -69,10 +69,10 @@
         <div class="scribble">Human connection <span>↗</span></div>
       </div>
     </div>
-    <div class="about-image reveal"><img src="assets/projects/about.webp" alt="Limitless team at a live brand activation" width="1440" height="900" loading="lazy" decoding="async"><div class="image-caption"><span>LIMITLESS / PEOPLE</span><span>TEAM → EXPERIENCE</span></div></div>
+    <div class="about-image reveal"><img class="image-reveal parallax-img" src="assets/projects/about.webp" alt="Limitless live activation" width="1326" height="884" loading="lazy" decoding="async"><div class="image-caption"><span>LIMITLESS / PEOPLE</span><span>TEAM → EXPERIENCE</span></div></div>
   </section>
 
-  <section class="statement"><div class="statement-word">PEOPLE</div><div class="statement-content reveal"><small>THE LIMITLESS APPROACH</small><h2>We don't just<br>reach people.<br>We <em>touch</em> lives.</h2><span>02 — 06</span></div></section>
+  <section class="statement"><img class="statement-photo parallax-img image-reveal" src="assets/projects/statement.webp" alt="Limitless live activation team" width="1063" height="598" loading="lazy" decoding="async"><div class="statement-overlay"></div><div class="statement-word">PEOPLE</div><div class="statement-content reveal"><small>THE LIMITLESS APPROACH</small><h2>We don't just<br>reach people.<br>We <em>touch</em> lives.</h2><span>02 — 06</span></div></section>
 
   <section id="services" class="section services">
     <div class="section-no reveal">02 / WHAT WE DO <span>END-TO-END SOLUTIONS</span></div>
@@ -124,7 +124,7 @@
 
   <section id="production" class="production section">
     <div class="production-copy reveal"><p class="kicker">Production capability</p><h2>From <em>3m</em><br>to <em>100m.</em></h2><p>For Shell, the team established approximately 178 distributor outlets across Egypt. Branding covered shops, oil stands, posters and light boxes, with regular monthly follow-up and maintenance.</p><div class="prod-stat"><strong>178</strong><span>distributor outlets<br>across Egypt</span></div></div>
-    <div class="production-visual reveal"><img src="assets/projects/production.webp" alt="Selected event production and brand experience" width="1440" height="900" loading="lazy" decoding="async"><div class="corner c1">03M</div><div class="corner c2">100M</div><div class="scan"></div><div class="prod-label">SELECTED / PRODUCTION</div></div>
+    <div class="production-visual reveal"><img class="image-reveal parallax-img" src="assets/projects/production.webp" alt="Limitless production and retail display" width="1800" height="1016" loading="lazy" decoding="async"><div class="corner c1">03M</div><div class="corner c2">100M</div><div class="scan"></div><div class="prod-label">SELECTED / PRODUCTION</div></div>
   </section>
 
   <section class="quote"><div class="quote-no">05</div><div class="quote-mark">“</div><blockquote>Marketing's job is never done.<br>It's about <em>perpetual motion.</em></blockquote><p>We must continue to innovate every day.</p></section>

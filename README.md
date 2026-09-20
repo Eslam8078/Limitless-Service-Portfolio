@@ -1,22 +1,30 @@
-# Limitless Marketing Services — Angular 22
+# Limitless Marketing Services — Angular 22 Portfolio
 
-Premium responsive marketing portfolio based on the supplied company material.
+Premium responsive marketing-agency portfolio built with Angular 22, GSAP and a curated set of the supplied company portfolio images.
 
 ## Run
 
-Use Node.js 22.22.3+ for Angular 22.
-
 ```powershell
+node -v
 npm install
 npm start
 ```
 
-Production build:
+Use Node 22.22.3 or newer.
+
+## Production build
 
 ```powershell
 npm run build
 ```
 
-## Latest pass
-
-This version removes the custom mouse cursor and Three.js/WebGL layer for a faster first load, converts the curated visuals to WebP, uses the supplied company logo, strengthens mobile UX, and adds lightweight scroll/hover/stat animations.
+## Main features
+- Original supplied Limitless logo, cleaned for dark UI
+- Curated high-quality company portfolio imagery
+- Fast hero preload + lazy-loaded secondary imagery
+- Responsive mobile navigation and touch-friendly controls
+- GSAP intro, ScrollTrigger reveals, parallax and stagger animations
+- Work filters + fullscreen lightbox + swipe navigation
+- Scroll progress and hide/show navigation behavior
+- Reduced-motion support
+- No custom mouse circle
