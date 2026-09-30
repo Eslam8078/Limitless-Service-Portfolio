@@ -77,10 +77,10 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.setupScrollAnimations();
 
     const hash = window.location.hash.slice(1);
-    if (hash) window.setTimeout(() => this.scrollTo(hash, false), 120);
+    if (hash) window.setTimeout(() => this.scrollTo(hash, false), 180);
 
-    window.setTimeout(() => (this.loaded = true), 760);
-    window.setTimeout(() => ScrollTrigger.refresh(), 900);
+    this.finishLoaderWhenReady();
+    window.setTimeout(() => ScrollTrigger.refresh(), 950);
   }
 
   ngOnDestroy(): void {
@@ -88,7 +88,35 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.sectionObserver?.disconnect();
     if (this.scrollFrame) cancelAnimationFrame(this.scrollFrame);
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    document.body.classList.remove('ultimate', 'menu-locked', 'locked');
+    document.body.classList.remove('ultimate', 'menu-locked', 'locked', 'site-ready');
+  }
+
+  private finishLoaderWhenReady(): void {
+    const start = performance.now();
+    const minimumVisibleMs = 420;
+    const maximumWaitMs = 1400;
+    const heroImage = document.querySelector<HTMLImageElement>('.hero-photo');
+    let completed = false;
+
+    const finish = (): void => {
+      if (completed) return;
+      completed = true;
+      const elapsed = performance.now() - start;
+      const wait = Math.max(0, minimumVisibleMs - elapsed);
+      window.setTimeout(() => {
+        this.loaded = true;
+        document.body.classList.add('site-ready');
+      }, wait);
+    };
+
+    if (!heroImage || heroImage.complete) {
+      finish();
+      return;
+    }
+
+    heroImage.addEventListener('load', finish, { once: true });
+    heroImage.addEventListener('error', finish, { once: true });
+    window.setTimeout(finish, maximumWaitMs);
   }
 
   private setupIntroAnimation(): void {

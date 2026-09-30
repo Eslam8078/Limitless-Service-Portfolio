@@ -34,7 +34,10 @@ npm run build
 
 - Rebuilt the Limitless logo from the supplied source image with transparent, tightly cropped WebP assets.
 - Fixed the broken logo and favicon references that previously pointed to missing assets.
-- Added the Limitless logo to the loader, navigation, hero brand lockup and footer.
+- Added the Limitless logo to the loader, redesigned navigation lockup, hero brand lockup and footer.
+- Rebuilt the header with a glass navigation shell, clearer hierarchy, responsive tablet behavior and a cleaner mobile menu.
+- Changed the intro screen to auto-finish after the critical hero image is ready, with a short minimum display and a safe fallback timeout — no user click is required.
+- Added a compact hero profile panel with experience, geography and service-format highlights.
 - Improved the visual hierarchy of the hero and experience badge.
 - Added refined hover states and interaction details for services, work cards, client blocks and the main CTA.
 - Improved mobile logo sizing, spacing and hero branding.
