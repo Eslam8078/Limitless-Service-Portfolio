@@ -67,20 +67,26 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.lastScrollY = window.scrollY;
+    this.forceHeroStart();
+    this.lastScrollY = 0;
     document.body.classList.add('ultimate');
     this.setScrollVars();
     this.setupIntroAnimation();
     this.setupRevealObserver();
     this.setupScrollAnimations();
     this.setupAdvancedMotion();
+    this.setupHeroMicroMotion();
     this.syncActiveSection();
-
-    const hash = window.location.hash.slice(1);
-    if (hash) window.setTimeout(() => this.scrollTo(hash, false), 180);
 
     this.finishLoaderWhenReady();
     window.setTimeout(() => ScrollTrigger.refresh(), 950);
+  }
+
+  private forceHeroStart(): void {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    history.replaceState(null, '', '#home');
+    this.activeSection = 'home';
   }
 
   ngOnDestroy(): void {
@@ -126,13 +132,17 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    gsap.timeline({ defaults: { ease: 'power4.out' } })
-      .from('.nav', { y: -18, opacity: 0, duration: 0.55 })
-      .from('.hero-kicker', { y: 22, opacity: 0, duration: 0.55 }, '-=.25')
-      .from('.hero-title .line', { yPercent: 120, opacity: 0, duration: 0.9, stagger: 0.08 }, '-=.2')
-      .from('.hero-bottom > *', { y: 20, opacity: 0, duration: 0.55, stagger: 0.08 }, '-=.45')
-      .from('.hero-stamp', { scale: 0.7, opacity: 0, rotate: -18, duration: 0.65 }, '-=.35')
-      .from('.hero-photo', { scale: 1.08, opacity: 0, duration: 1.2 }, '<');
+    const intro = gsap.timeline({ defaults: { ease: 'power4.out' } });
+    intro
+      .from('.nav', { y: -24, opacity: 0, duration: 0.65 })
+      .from('.hero-top span', { y: 10, opacity: 0, duration: 0.45, stagger: 0.08 }, '-=.35')
+      .from('.hero-kicker', { y: 24, opacity: 0, duration: 0.6 }, '-=.25')
+      .from('.hero-title .line', { yPercent: 125, opacity: 0, duration: 0.95, stagger: 0.09 }, '-=.25')
+      .from('.hero-bottom > *', { y: 24, opacity: 0, duration: 0.6, stagger: 0.1 }, '-=.5')
+      .from('.hero-panel', { x: 34, y: 12, opacity: 0, scale: .92, duration: .85 }, '-=.48')
+      .from('.hero-scroll', { y: 14, opacity: 0, duration: .5 }, '-=.38')
+      .from('.hero-meta span', { x: 10, opacity: 0, duration: .4, stagger: .07 }, '-=.35')
+      .from('.hero-photo', { scale: 1.09, opacity: 0, duration: 1.25 }, '<');
   }
 
   private setupRevealObserver(): void {
@@ -226,6 +236,54 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       card.addEventListener('mousemove', onMove);
       card.addEventListener('mouseleave', onLeave);
     });
+  }
+
+  private setupHeroMicroMotion(): void {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (reduced || !finePointer) return;
+
+    gsap.fromTo('.hero-panel-grid div',
+      { opacity: 0, y: 14 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: .55,
+        stagger: .08,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: '.hero', start: 'top 72%', once: true }
+      }
+    );
+
+    gsap.fromTo('.hero-meta span',
+      { opacity: .18, x: 7 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: .5,
+        stagger: .09,
+        ease: 'power3.out',
+        delay: .35
+      }
+    );
+  }
+
+  onHeroPointerMove(event: PointerEvent): void {
+    if (event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
+    const hero = event.currentTarget as HTMLElement | null;
+    if (!hero) return;
+
+    const rect = hero.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+    hero.style.setProperty('--hero-mx', `${x.toFixed(2)}%`);
+    hero.style.setProperty('--hero-my', `${y.toFixed(2)}%`);
+  }
+
+  resetHeroPointer(): void {
+    const hero = document.querySelector<HTMLElement>('.hero');
+    hero?.style.setProperty('--hero-mx', '68%');
+    hero?.style.setProperty('--hero-my', '42%');
   }
 
   private setupScrollAnimations(): void {

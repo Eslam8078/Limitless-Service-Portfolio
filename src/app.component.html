@@ -35,7 +35,7 @@
 </header>
 
 <main>
-  <section id="home" class="hero">
+  <section id="home" class="hero" (pointermove)="onHeroPointerMove($event)" (pointerleave)="resetHeroPointer()">
     <img class="hero-photo parallax-img" src="assets/projects/hero.webp" alt="Limitless live brand activation" width="1330" height="886" fetchpriority="high" decoding="async">
     <div class="hero-overlay"></div>
     <div class="hero-grid"></div>
