@@ -1,5 +1,6 @@
 <div class="loader" [class.done]="loaded" aria-hidden="true">
-  <div class="loader-top"><span>LIMITLESS</span><span>MARKETING SERVICES</span></div>
+  <div class="loader-top"><span>LIMITLESS / 2026</span><span>MARKETING SERVICES / CAIRO</span></div>
+  <div class="loader-brand"><img src="assets/limitless-logo-clean.webp" alt="" width="603" height="608"></div>
   <div class="loader-word">THE FUTURE IS <b>LIMITLESS<span>.</span></b></div>
   <div class="loader-line"><i></i></div>
   <small>MARKETING / PEOPLE / MOTION</small>
@@ -9,10 +10,10 @@
 
 <header class="nav" [class.scrolled]="scrollProgress > 3" [class.nav-hidden]="navHidden">
   <a class="brand" href="#home" aria-label="Go to home" (click)="navigate($event, 'home')">
-    <img class="brand-logo" src="assets/limitless-logo-premium.webp" width="624" height="380" alt="Limitless Marketing Services">
+    <img class="brand-logo" src="assets/limitless-logo-clean.webp" width="603" height="608" alt="Limitless Marketing Services" loading="eager" decoding="async">
   </a>
 
-  <button type="button" class="menu" [class.open]="menuOpen" aria-label="Toggle menu" [attr.aria-expanded]="menuOpen" aria-controls="main-navigation" (click)="toggleMenu">
+  <button type="button" class="menu" [class.open]="menuOpen" aria-label="Toggle menu" [attr.aria-expanded]="menuOpen" aria-controls="main-navigation" (click)="toggleMenu()">
     <i></i><i></i>
   </button>
 
@@ -41,6 +42,7 @@
     <div class="hero-top"><span>CAIRO / EGYPT</span><span>PEOPLE-TO-PEOPLE AGENCY</span><span>01—06</span></div>
 
     <div class="hero-content">
+      <div class="hero-brand-lockup"><img src="assets/limitless-logo-clean.webp" alt="Limitless Marketing Services" width="603" height="608"><span>LIMITLESS<br>MARKETING SERVICES</span></div>
       <p class="hero-kicker"><b></b>20+ YEARS OF HUMAN-CENTRIC MARKETING</p>
       <h1 class="hero-title"><span class="line">The future is</span><span class="line"><em>limitless.</em></span></h1>
       <div class="hero-bottom">
@@ -50,7 +52,7 @@
     </div>
 
     <div class="hero-meta" aria-hidden="true"><span>MARKETING</span><span>PEOPLE</span><span>MOTION</span><span>RESULTS</span></div>
-    <div class="hero-stamp"><strong>20+</strong><span>YEARS OF<br>EXPERIENCE</span></div>
+    <div class="hero-stamp"><span>LIMITLESS</span><strong>20+</strong><small>YEARS OF EXPERIENCE</small></div>
     <div class="hero-scroll">SCROLL TO EXPLORE <i></i></div>
   </section>
 
@@ -141,12 +143,12 @@
 </main>
 
 <footer>
-  <img src="assets/limitless-logo-premium.webp" alt="Limitless Marketing Services" class="footer-logo" width="624" height="380">
+  <div class="footer-brand"><img src="assets/limitless-logo-clean.webp" alt="Limitless Marketing Services" class="footer-logo" width="603" height="608" loading="lazy" decoding="async"><div><strong>Limitless</strong><span>Marketing Services</span></div></div>
   <nav class="footer-links" aria-label="Footer navigation"><a href="#home" (click)="navigate($event, 'home')">Home</a><a href="#about" (click)="navigate($event, 'about')">About</a><a href="#services" (click)="navigate($event, 'services')">Services</a><a href="#work" (click)="navigate($event, 'work')">Work</a><a href="#production" (click)="navigate($event, 'production')">Production</a><a href="#clients" (click)="navigate($event, 'clients')">Clients</a><a href="#contact" (click)="navigate($event, 'contact')">Contact</a></nav>
   <span>THE FUTURE IS LIMITLESS.</span><span>© 2026</span>
 </footer>
 
-<button type="button" class="back-top" [class.show]="scrollProgress > 15" (click)="scrollToTop" aria-label="Back to top">↑</button>
+<button type="button" class="back-top" [class.show]="scrollProgress > 15" (click)="scrollToTop()" aria-label="Back to top">↑</button>
 
 <div class="lightbox" *ngIf="selectedProject" role="dialog" aria-modal="true" [attr.aria-label]="selectedProject.title" (click)="closeProject()">
   <button type="button" class="close" aria-label="Close project" (click)="closeProject()">×</button>

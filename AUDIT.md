@@ -1,17 +1,30 @@
-# Limitless Angular 22 — image, UX and animation pass
+# Limitless Angular 22 — Professional UX / Branding Pass
 
-## What changed
-- Replaced the previous gallery imagery with a curated set extracted from the supplied Limitless portfolio PDF, favoring clear daylight/indoor activation, production, retail and roadshow photography.
-- Removed unused legacy image assets from the bundle.
-- Rebuilt the logo asset from the supplied company logo image: transparent background, tighter crop, brighter graphite lettering, preserved red accent.
-- Added a lightweight 96px WebP favicon based on the supplied logo mark.
-- Preloaded the hero image and kept the remaining images lazy-loaded.
-- Added GSAP ScrollTrigger for professional entrance, image-reveal, parallax, stagger and movement effects.
-- Added nav hide-on-scroll-down / show-on-scroll-up behavior and preserved mobile menu locking.
-- Improved mobile typography, touch targets, spacing, gallery sizing and readability.
-- Added subtle project-card lift, image zoom, corner cue, client-logo hover, statement pulse and CTA sheen animations.
-- Kept reduced-motion support and disabled the heavy parallax layer on reduced-motion devices.
-- Removed the custom cursor / mouse ring entirely.
+## Completed
 
-## Build note
-The source is pinned to Angular 22.1.7 and TypeScript 6.0.3. Final dependency installation/build was not completed in the audit environment because its Node version is 22.16.0 and `npm install` timed out. Use Node 22.22.3+ on the target machine.
+### Branding
+- Rebuilt `limitless-logo-clean.webp` from the supplied `Limitless logo.png`.
+- Added `limitless-favicon-clean.webp`.
+- Replaced broken/missing logo references.
+- Added the logo to the loader, navbar, hero brand lockup and footer.
+- Corrected the logo intrinsic dimensions in the navbar markup.
+
+### UX / UI
+- Strengthened the hero brand hierarchy and experience badge.
+- Added more polished hover feedback for service rows, project cards, client blocks and CTA.
+- Improved mobile navigation/logo proportions.
+- Preserved touch-friendly project lightbox controls.
+- Preserved reduced-motion behavior.
+
+### SEO / Project quality
+- Improved meta description.
+- Added keyword metadata and Open Graph metadata.
+- Added a production `.gitignore`.
+- Rewrote README with setup, stack, structure and improvement notes.
+
+## Validation
+
+- CSS brace balance checked: 414 opening / 414 closing braces.
+- Logo assets verified and generated successfully.
+- Angular asset references were checked against the extracted asset tree.
+- Full `npm install` / Angular production build was attempted but could not finish because the execution environment timed out while downloading npm dependencies. No claim of a successful Angular build is made.

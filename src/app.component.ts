@@ -267,7 +267,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       value: target,
       duration: 1.25,
       ease: 'power3.out',
-      onUpdate: () => (strong.textContent = `${Math.round(state.value)}${suffix}`)
+      onUpdate: () => {
+        strong.textContent = `${Math.round(state.value)}${suffix}`;
+      }
     });
   }
 
