@@ -356,10 +356,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.scrollFrame = requestAnimationFrame(() => {
       this.scrollFrame = 0;
       const current = window.scrollY;
-      const goingDown = current > this.lastScrollY + 4;
-      const goingUp = current < this.lastScrollY - 4;
-      if (!this.menuOpen && current > 140 && goingDown) this.navHidden = true;
-      if (goingUp || current < 100) this.navHidden = false;
+      this.navHidden = false;
       this.lastScrollY = current;
       this.setScrollVars();
       this.syncActiveSection();
