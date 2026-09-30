@@ -28,3 +28,6 @@
 - Logo assets verified and generated successfully.
 - Angular asset references were checked against the extracted asset tree.
 - Full `npm install` / Angular production build was attempted but could not finish because the execution environment timed out while downloading npm dependencies. No claim of a successful Angular build is made.
+
+### Mobile responsive pass
+The latest revision includes a mobile-first header/navigation rebuild, touch-safe hover behavior, safe-area support, responsive Hero spacing, and animated mobile menu items.

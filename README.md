@@ -68,3 +68,6 @@ Primary visual direction: black / warm off-white / Limitless red, with editorial
 ## Note
 
 The source package was updated and statically validated in the available environment. A full Angular dependency installation/build could not be completed here because the environment could not finish downloading the Angular packages from npm within the available execution window.
+
+### Mobile responsive pass
+The latest revision includes a mobile-first header/navigation rebuild, touch-safe hover behavior, safe-area support, responsive Hero spacing, and animated mobile menu items.
