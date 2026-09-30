@@ -32,7 +32,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   readonly filters: WorkFilter[] = ['All', 'Field', 'Activation', 'Production', 'Events'];
 
   private revealObserver?: IntersectionObserver;
-  private sectionObserver?: IntersectionObserver;
   private scrollFrame = 0;
   private touchStartX: number | null = null;
   private lastScrollY = 0;
@@ -73,8 +72,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.setScrollVars();
     this.setupIntroAnimation();
     this.setupRevealObserver();
-    this.setupSectionObserver();
     this.setupScrollAnimations();
+    this.setupAdvancedMotion();
+    this.syncActiveSection();
 
     const hash = window.location.hash.slice(1);
     if (hash) window.setTimeout(() => this.scrollTo(hash, false), 180);
@@ -85,7 +85,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.revealObserver?.disconnect();
-    this.sectionObserver?.disconnect();
     if (this.scrollFrame) cancelAnimationFrame(this.scrollFrame);
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     document.body.classList.remove('ultimate', 'menu-locked', 'locked', 'site-ready');
@@ -154,15 +153,79 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  private setupSectionObserver(): void {
-    this.sectionObserver = new IntersectionObserver(
-      entries => entries.forEach(entry => {
-        if (entry.isIntersecting) this.activeSection = entry.target.id || this.activeSection;
-      }),
-      { threshold: 0.16, rootMargin: '-16% 0px -58% 0px' }
+  private setupAdvancedMotion(): void {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    gsap.utils.toArray<HTMLElement>('.section-no').forEach((element) => {
+      gsap.fromTo(element,
+        { opacity: 0, x: -18 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: .7,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: element, start: 'top 88%', once: true }
+        }
+      );
+    });
+
+    gsap.utils.toArray<HTMLElement>('.client-logos span').forEach((element, index) => {
+      gsap.fromTo(element,
+        { opacity: 0, y: 18 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: .55,
+          delay: index * .055,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: element.parentElement, start: 'top 86%', once: true }
+        }
+      );
+    });
+
+    gsap.fromTo('.contact-button',
+      { scale: .94, opacity: 0 },
+      {
+        scale: 1,
+        opacity: 1,
+        duration: .8,
+        ease: 'back.out(1.5)',
+        scrollTrigger: { trigger: '.contact-button', start: 'top 88%', once: true }
+      }
     );
 
-    document.querySelectorAll('section[id]').forEach(element => this.sectionObserver?.observe(element));
+    gsap.fromTo('.footer-main > *',
+      { opacity: 0, y: 16 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: .65,
+        stagger: .1,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: 'footer', start: 'top 95%', once: true }
+      }
+    );
+
+    if (!finePointer) return;
+
+    document.querySelectorAll<HTMLElement>('.project').forEach((card) => {
+      const onMove = (event: MouseEvent): void => {
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - .5;
+        const y = (event.clientY - rect.top) / rect.height - .5;
+        card.style.setProperty('--tilt-x', (x * 4).toFixed(2));
+        card.style.setProperty('--tilt-y', (y * 4).toFixed(2));
+      };
+      const onLeave = (): void => {
+        card.style.setProperty('--tilt-x', '0');
+        card.style.setProperty('--tilt-y', '0');
+      };
+      card.addEventListener('mousemove', onMove);
+      card.addEventListener('mouseleave', onLeave);
+    });
   }
 
   private setupScrollAnimations(): void {
@@ -241,6 +304,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       if (goingUp || current < 100) this.navHidden = false;
       this.lastScrollY = current;
       this.setScrollVars();
+      this.syncActiveSection();
     });
   }
 
@@ -259,8 +323,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   @HostListener('window:resize')
   onResize(): void {
-    if (innerWidth > 900 && this.menuOpen) this.closeMenu();
+    if (innerWidth > 1080 && this.menuOpen) this.closeMenu();
     ScrollTrigger.refresh();
+    this.syncActiveSection();
   }
 
   @HostListener('document:touchstart', ['$event'])
@@ -325,9 +390,32 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     const target = document.getElementById(id);
     if (!target) return;
     if (updateHash) history.replaceState(null, '', `#${id}`);
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    this.activeSection = id;
     this.closeMenu();
     this.navHidden = false;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.setTimeout(() => this.syncActiveSection(), 700);
+  }
+
+  private syncActiveSection(): void {
+    const nav = document.querySelector<HTMLElement>('.nav');
+    const marker = window.scrollY + (nav?.offsetHeight ?? 84) + 24;
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
+    const positions = sections
+      .map(section => ({
+        id: section.id,
+        top: section.getBoundingClientRect().top + window.scrollY
+      }))
+      .sort((a, b) => a.top - b.top);
+
+    let currentId = positions[0]?.id ?? 'home';
+    for (const section of positions) {
+      if (section.top <= marker) currentId = section.id;
+      else break;
+    }
+
+    if (window.scrollY <= 10) currentId = 'home';
+    this.activeSection = currentId;
   }
 
   setFilter(filter: WorkFilter): void {

@@ -20,13 +20,15 @@
 
   <div class="mobile-backdrop" [class.show]="menuOpen" (click)="closeMenu()" aria-hidden="true"></div>
 
+  <div class="nav-status" aria-hidden="true"><i></i><span>CAIRO / 2026</span></div>
+
   <nav id="main-navigation" [class.open]="menuOpen" aria-label="Main navigation">
     <a href="#home" [class.active]="activeSection==='home'" [attr.aria-current]="activeSection==='home' ? 'page' : null" (click)="navigate($event, 'home')">Home</a>
     <a href="#about" [class.active]="activeSection==='about'" [attr.aria-current]="activeSection==='about' ? 'location' : null" (click)="navigate($event, 'about')">About</a>
     <a href="#services" [class.active]="activeSection==='services'" [attr.aria-current]="activeSection==='services' ? 'location' : null" (click)="navigate($event, 'services')">Services</a>
+    <a href="#clients" [class.active]="activeSection==='clients'" [attr.aria-current]="activeSection==='clients' ? 'location' : null" (click)="navigate($event, 'clients')">Clients</a>
     <a href="#work" [class.active]="activeSection==='work'" [attr.aria-current]="activeSection==='work' ? 'location' : null" (click)="navigate($event, 'work')">Work</a>
     <a href="#production" [class.active]="activeSection==='production'" [attr.aria-current]="activeSection==='production' ? 'location' : null" (click)="navigate($event, 'production')">Production</a>
-    <a href="#clients" [class.active]="activeSection==='clients'" [attr.aria-current]="activeSection==='clients' ? 'location' : null" (click)="navigate($event, 'clients')">Clients</a>
     <a href="#contact" [class.active]="activeSection==='contact'" [attr.aria-current]="activeSection==='contact' ? 'location' : null" (click)="navigate($event, 'contact')">Contact</a>
     <a class="nav-cta" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=Aymanpm99%40gmail.com&amp;su=Limitless%20Project%20Inquiry&amp;body=Hello%20Limitless%20Marketing%20Services%2C%0A%0AI%27d%20like%20to%20discuss%20a%20new%20project.%0A%0AProject%20details%3A%0A%0ABest%20regards%2C" target="_blank" rel="noopener noreferrer">Start a project <span>↗</span></a>
   </nav>
@@ -154,9 +156,19 @@
 </main>
 
 <footer>
-  <div class="footer-brand"><span class="footer-mark"><img src="assets/limitless-logo-clean.webp" alt="Limitless Marketing Services" class="footer-logo" width="603" height="608" loading="lazy" decoding="async"></span><div><strong>Limitless</strong><span>Marketing Services</span></div></div>
-  <nav class="footer-links" aria-label="Footer navigation"><a href="#home" (click)="navigate($event, 'home')">Home</a><a href="#about" (click)="navigate($event, 'about')">About</a><a href="#services" (click)="navigate($event, 'services')">Services</a><a href="#work" (click)="navigate($event, 'work')">Work</a><a href="#production" (click)="navigate($event, 'production')">Production</a><a href="#clients" (click)="navigate($event, 'clients')">Clients</a><a href="#contact" (click)="navigate($event, 'contact')">Contact</a></nav>
-  <span>THE FUTURE IS LIMITLESS.</span><span>© 2026</span>
+  <div class="footer-topline"><span>LIMITLESS / MARKETING SERVICES</span><span>CAIRO / EGYPT</span></div>
+  <div class="footer-main">
+    <div class="footer-brand"><span class="footer-mark"><img src="assets/limitless-logo-clean.webp" alt="Limitless Marketing Services" class="footer-logo" width="603" height="608" loading="lazy" decoding="async"></span><div><strong>Limitless</strong><span>Marketing Services</span></div></div>
+    <div class="footer-links-wrap">
+      <small>NAVIGATE</small>
+      <nav class="footer-links" aria-label="Footer navigation"><a href="#home" (click)="navigate($event, 'home')">Home</a><a href="#about" (click)="navigate($event, 'about')">About</a><a href="#services" (click)="navigate($event, 'services')">Services</a><a href="#clients" (click)="navigate($event, 'clients')">Clients</a><a href="#work" (click)="navigate($event, 'work')">Work</a><a href="#production" (click)="navigate($event, 'production')">Production</a><a href="#contact" (click)="navigate($event, 'contact')">Contact</a></nav>
+    </div>
+    <div class="footer-message">
+      <small>THE FUTURE IS</small>
+      <strong>LIMITLESS<span>.</span></strong>
+    </div>
+  </div>
+  <div class="footer-bottom"><span>Human connection · Experience · Results</span><span>© 2026 Limitless Marketing Services</span><a href="#home" (click)="navigate($event, 'home')">Back to top ↗</a></div>
 </footer>
 
 <button type="button" class="back-top" [class.show]="scrollProgress > 15" (click)="scrollToTop()" aria-label="Back to top">↑</button>
