@@ -36,7 +36,6 @@
 
 <main>
   <section id="home" class="hero" (pointermove)="onHeroPointerMove($event)" (pointerleave)="resetHeroPointer()">
-    <img class="hero-photo parallax-img" src="assets/projects/hero.webp" alt="Limitless live brand activation" width="1330" height="886" fetchpriority="high" decoding="async">
     <div class="hero-overlay"></div>
     <div class="hero-grid"></div>
     <div class="hero-orb orb-a"></div>
@@ -48,6 +47,7 @@
       <p class="hero-kicker"><b></b>20+ YEARS OF HUMAN-CENTRIC MARKETING</p>
       <h1 class="hero-title"><span class="line">The future is</span><span class="line"><em>limitless.</em></span></h1>
       <div class="hero-bottom">
+        <div class="hero-note" aria-hidden="true"><span>DIRECT / DIGITAL / LIVE</span><i></i></div>
         <p>Real people. Real connections. Real-world activation, production and direct marketing built around measurable impact.</p>
         <button type="button" class="circle-cta" (click)="scrollTo('work')" aria-label="Explore selected work"><span>Explore<br>our work</span><b>↘</b></button>
       </div>

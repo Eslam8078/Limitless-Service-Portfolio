@@ -37,17 +37,17 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   private lastScrollY = 0;
 
   private readonly projectData: Omit<Project, 'index'>[] = [
-    { title: 'Open Stars Experience', category: 'Brand Activation', image: 'assets/projects/work-01.webp' },
-    { title: 'Pharma Brand Space', category: 'Events', image: 'assets/projects/work-02.webp' },
-    { title: 'Orange Exhibition Build', category: 'Production', image: 'assets/projects/work-03.webp' },
-    { title: 'Premium Display Install', category: 'Brand Activation', image: 'assets/projects/work-04.webp' },
-    { title: 'Retail Brand Experience', category: 'Production', image: 'assets/projects/work-05.webp' },
-    { title: 'Castrol Field Activation', category: 'Field Marketing', image: 'assets/projects/work-06.webp' },
-    { title: 'Castrol Roadshow', category: 'Events', image: 'assets/projects/work-07.webp' },
-    { title: 'Total Roadshow', category: 'Field Marketing', image: 'assets/projects/work-08.webp' },
-    { title: 'Total Brand Activation', category: 'Events', image: 'assets/projects/work-09.webp' },
+    { title: 'Retail & Production Display', category: 'Production', image: 'assets/projects/work-11.webp' },
     { title: 'Live Campaign Experience', category: 'Events', image: 'assets/projects/work-10.webp' },
-    { title: 'Retail & Production Display', category: 'Production', image: 'assets/projects/work-11.webp' }
+    { title: 'Total Brand Activation', category: 'Events', image: 'assets/projects/work-09.webp' },
+    { title: 'Total Roadshow', category: 'Field Marketing', image: 'assets/projects/work-08.webp' },
+    { title: 'Castrol Roadshow', category: 'Events', image: 'assets/projects/work-07.webp' },
+    { title: 'Castrol Field Activation', category: 'Field Marketing', image: 'assets/projects/work-06.webp' },
+    { title: 'Retail Brand Experience', category: 'Production', image: 'assets/projects/work-05.webp' },
+    { title: 'Premium Display Install', category: 'Brand Activation', image: 'assets/projects/work-04.webp' },
+    { title: 'Orange Exhibition Build', category: 'Production', image: 'assets/projects/work-03.webp' },
+    { title: 'Pharma Brand Space', category: 'Events', image: 'assets/projects/work-02.webp' },
+    { title: 'Open Stars Experience', category: 'Brand Activation', image: 'assets/projects/work-01.webp' }
   ];
 
   projects: Project[] = this.projectData.map((project, index) => ({
@@ -97,31 +97,10 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }
 
   private finishLoaderWhenReady(): void {
-    const start = performance.now();
-    const minimumVisibleMs = 420;
-    const maximumWaitMs = 1400;
-    const heroImage = document.querySelector<HTMLImageElement>('.hero-photo');
-    let completed = false;
-
-    const finish = (): void => {
-      if (completed) return;
-      completed = true;
-      const elapsed = performance.now() - start;
-      const wait = Math.max(0, minimumVisibleMs - elapsed);
-      window.setTimeout(() => {
-        this.loaded = true;
-        document.body.classList.add('site-ready');
-      }, wait);
-    };
-
-    if (!heroImage || heroImage.complete) {
-      finish();
-      return;
-    }
-
-    heroImage.addEventListener('load', finish, { once: true });
-    heroImage.addEventListener('error', finish, { once: true });
-    window.setTimeout(finish, maximumWaitMs);
+    window.setTimeout(() => {
+      this.loaded = true;
+      document.body.classList.add('site-ready');
+    }, 520);
   }
 
   private setupIntroAnimation(): void {
@@ -141,8 +120,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       .from('.hero-bottom > *', { y: 24, opacity: 0, duration: 0.6, stagger: 0.1 }, '-=.5')
       .from('.hero-panel', { x: 34, y: 12, opacity: 0, scale: .92, duration: .85 }, '-=.48')
       .from('.hero-scroll', { y: 14, opacity: 0, duration: .5 }, '-=.38')
-      .from('.hero-meta span', { x: 10, opacity: 0, duration: .4, stagger: .07 }, '-=.35')
-      .from('.hero-photo', { scale: 1.09, opacity: 0, duration: 1.25 }, '<');
+      .from('.hero-meta span', { x: 10, opacity: 0, duration: .4, stagger: .07 }, '-=.35');
   }
 
   private setupRevealObserver(): void {
@@ -342,12 +320,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       scrollTrigger: { trigger: '.statement', start: 'top bottom', end: 'bottom top', scrub: 1.5 }
     });
 
-    gsap.to('.hero-photo', {
-      scale: 1.11,
-      yPercent: 6,
-      ease: 'none',
-      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.2 }
-    });
   }
 
   @HostListener('window:scroll')
