@@ -129,9 +129,17 @@
 
     <div class="project-grid">
       <button type="button" class="project reveal" *ngFor="let p of filteredProjects" (click)="openProject(p)" [attr.aria-label]="'Open ' + p.title">
-        <img [src]="p.image" [alt]="p.title + ' — ' + p.category" width="1280" height="900" loading="lazy" decoding="async">
-        <div class="project-shade"></div><span class="project-num">{{p.index}}</span>
-        <div class="project-info"><small>{{p.category}}</small><h3>{{p.title}}</h3><b>View project ↗</b></div>
+        <span class="project-media">
+          <img [src]="p.image" [alt]="p.title + ' — ' + p.category" width="1280" height="900" loading="lazy" decoding="async">
+          <span class="project-frame"></span>
+          <span class="project-num">{{p.index}}</span>
+          <span class="project-category">{{p.category}}</span>
+          <span class="project-view">↗</span>
+        </span>
+        <span class="project-info">
+          <span class="project-info-top"><small>LIMITLESS / SELECTED WORK</small><small>{{p.index}}</small></span>
+          <span class="project-title-row"><span class="project-title">{{p.title}}</span><span class="project-link">View project <b>↗</b></span></span>
+        </span>
       </button>
     </div>
   </section>
